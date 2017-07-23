@@ -14,6 +14,10 @@ script.on_load(function (event)
 	OnLoad()
 end)
 
+script.on_configuration_changed( function(event)
+	OnConfigurationChanged()
+end)
+
 --build
 script.on_event(defines.events.on_robot_built_entity, function(event)
 	OnBuildEntity(event.created_entity)

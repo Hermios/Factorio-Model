@@ -3,6 +3,17 @@ local trains={}
 local previousAccuTable={}
 entities[hybridTrain]=trains
 local trainPreviousAccu={}
+trains.onInit=function()
+	global.basePowerMax = game.entity_prototypes["hybrid-train"].max_energy_usage + 10;
+	basePowerMax = global.basePowerMax;
+end
+trains.onLoad=function()
+	basePowerMax = global.basePowerMax;
+end
+trains.onConfigurationChanged=function()
+	global.basePowerMax = game.entity_prototypes["hybrid-train"].max_energy_usage + 10;
+	basePowerMax = global.basePowerMax;
+end
 trains.onTick=function (entity)
 	local rail=entity.train.front_rail or entity.train.back_rail
 	if not string.ends(rail.name,"power") then
