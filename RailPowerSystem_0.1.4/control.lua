@@ -17,6 +17,7 @@ end)
 
 script.on_configuration_changed( function(event)
 	OnConfigurationChanged()
+	OnLoad()  -- this will double-call load event
 end)
 
 --build
