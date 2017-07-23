@@ -4,9 +4,9 @@ require "libs.railPowerLib"
 require "libs.eventsHandler"
 require "controls.rail"
 require "controls.train"
+require "methods.remoteBuilder"
 init=false
 script.on_init(function(event)
-
 	OnLoad()
 end)
 

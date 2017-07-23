@@ -56,12 +56,17 @@ clearSignals= function (train)
 	OnTrainStateChanged(train)
 end
 
+addTrainStop=function(trainStopName)
+	entities[trainStopName]=trainStopEntity
+end
+
 function InitRemote()
 remote.add_interface
 	(ModName,
 		{
 			setSignals=setSignals,
-			clearSignals=clearSignals
+			clearSignals=clearSignals,
+			addTrainStop=addTrainStop
 		}
 	)
 end

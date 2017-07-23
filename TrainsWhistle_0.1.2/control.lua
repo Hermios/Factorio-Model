@@ -2,7 +2,6 @@ require "constants"
 require "localData"
 require "libs.dataLibs"
 require "libs.logging"
-require "methods.trainFunctions"
 require "events.globalEvents"
 local initialized=false
 	
@@ -12,6 +11,7 @@ local initialized=false
 script.on_event(defines.events.on_tick, function(event)
 	if not initialized then
 		InitDataLibs()
+		trainEntity.table=global.trains
 		initialized=true
 	end
 end)
@@ -68,6 +68,19 @@ end)
 script.on_event(defines.events.on_research_finished, function(event)
 	if event.research.name==trainWhistleTech then
 		global.trains={}
+	end
+end)
+
+---------------------------------------------------
+-- On copy paste
+---------------------------------------------------
+script.on_event(defines.events.on_pre_entity_settings_pasted, function(event)
+	if event.source.type==event.destination.type and entities[event.destination.type] and entities[event.destination.type].table then
+		if event.destination.type=="locomotive" then
+			entities[event.destination.type].table[event.destination.train.id]=entities[event.destination.type].table[event.source.train.id]
+		else
+			entities[event.destination.type].table[event.destination.unit_number]=entities[event.destination.type].table[event.source.unit_number]
+		end
 	end
 end)
 

@@ -21,6 +21,7 @@ script.on_event(defines.events.on_tick, function(event)
 		InitSignalLib()
 		InitGuiBuild()
 		InitRemote()
+		trainEntity.table=global.trains
 		initialized=true
 	end
 	openGui()
@@ -37,14 +38,14 @@ end)
 -- On entity built
 ---------------------------------------------------
 script.on_event(defines.events.on_robot_built_entity, function(event)
-	if entities[event.created_entity.type] and entities[event.created_entity.type].OnBuilt then
-		entities[event.created_entity.type].OnBuilt(event.created_entity)
+	if entities[event.created_entity.name] and entities[event.created_entity.name].OnBuilt then
+		entities[event.created_entity.name].OnBuilt(event.created_entity)
 	end	
 end)
 
 script.on_event(defines.events.on_built_entity, function(event)
-	if entities[event.created_entity.type] and entities[event.created_entity.type].OnBuilt then
-		entities[event.created_entity.type].OnBuilt(event.created_entity)
+	if entities[event.created_entity.name] and entities[event.created_entity.name].OnBuilt then
+		entities[event.created_entity.name].OnBuilt(event.created_entity)
 	end	
 end)
 
@@ -58,14 +59,20 @@ end)
 -- On entity removed
 ---------------------------------------------------
 script.on_event(defines.events.on_robot_pre_mined, function(event)
-	if entities[event.entity.type] and entities[event.entity.type].OnRemoved then
-		entities[event.entity.type].OnRemoved(event.entity)
+	if entities[event.entity.name] and entities[event.entity.name].OnRemoved then
+		entities[event.entity.name].OnRemoved(event.entity)
 	end	
 end)
 
 script.on_event(defines.events.on_preplayer_mined_item, function(event)
-	if entities[event.entity.type] and entities[event.entity.type].OnRemoved then
-		entities[event.entity.type].OnRemoved(event.entity)
+	if entities[event.entity.name] and entities[event.entity.name].OnRemoved then
+		entities[event.entity.name].OnRemoved(event.entity)
+	end	
+end)
+
+script.on_event(defines.events.on_entity_died, function(event)
+	if entities[event.entity.name] and entities[event.entity.name].OnRemoved then
+		entities[event.entity.name].OnRemoved(event.entity)
 	end	
 end)
 
@@ -133,6 +140,19 @@ script.on_event(defines.events.on_gui_text_changed, function(event)
 	end	
 	if guiElementEntities[name] and guiElementEntities[name].OnChangedText then
 		guiElementEntities[name].OnChangedText(player.opened,event.element)
+	end
+end)
+
+---------------------------------------------------
+-- On copy paste
+---------------------------------------------------
+script.on_event(defines.events.on_pre_entity_settings_pasted, function(event)
+	if event.source.type==event.destination.type and entities[event.destination.type] and entities[event.destination.type].table then
+		if event.destination.type=="locomotive" then
+			entities[event.destination.type].table[event.destination.train.id]=entities[event.destination.type].table[event.source.train.id]
+		else
+			entities[event.destination.type].table[event.destination.unit_number]=entities[event.destination.type].table[event.source.unit_number]
+		end
 	end
 end)
 

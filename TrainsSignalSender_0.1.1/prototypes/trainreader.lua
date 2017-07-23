@@ -16,6 +16,7 @@ height=1
 local entity=createData("constant-combinator","constant-combinator","ghost-constant-combinator",
 {
 	icon="__"..ModName.."__/graphics/empty.png",
+	collision_mask={"not-colliding-with-itself"},
 	item_slot_count=40,
 	collision_box = {{0, 0}, {0, 0}},
     selection_box = {{0, 0}, {0, 0}},
