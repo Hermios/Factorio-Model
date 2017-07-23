@@ -5,7 +5,6 @@ entities[hybridTrain]=trains
 local trainPreviousAccu={}
 trains.onInit=function()
 	global.basePowerMax = game.entity_prototypes["hybrid-train"].max_energy_usage + 10;
-	basePowerMax = global.basePowerMax;
 end
 trains.onLoad=function()
 	basePowerMax = global.basePowerMax;

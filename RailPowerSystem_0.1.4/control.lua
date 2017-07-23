@@ -7,6 +7,7 @@ require "controls.train"
 require "methods.remoteBuilder"
 init=false
 script.on_init(function(event)
+	OnInit()
 	OnLoad()
 end)
 
