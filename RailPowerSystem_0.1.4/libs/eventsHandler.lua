@@ -1,9 +1,30 @@
 entities = {}
 
+function OnInit()
+	for _,entity in pairs(entities)
+		if entity.onInit then
+			entity.onInit();
+		end
+	end
+end
+
 function OnLoad()
 	if not global.electricTrains then
 		global.electricTrains = {}
-	end	
+	end
+	for _,entity in pairs(entities)
+		if entity.onLoad then
+			entity.onLoad();
+		end
+	end
+end
+
+function OnConfigurationChanged()
+	for _,entity in pairs(entities)
+		if entity.onConfigurationChanged then
+			entity.onConfigurationChanged();
+		end
+	end
 end
 
 function OnBuildEntity(entity)

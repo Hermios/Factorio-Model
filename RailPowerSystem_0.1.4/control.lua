@@ -7,11 +7,17 @@ require "controls.train"
 require "methods.remoteBuilder"
 init=false
 script.on_init(function(event)
+	OnInit()
 	OnLoad()
 end)
 
 script.on_load(function (event)
 	OnLoad()
+end)
+
+script.on_configuration_changed( function(event)
+	OnConfigurationChanged()
+	OnLoad()  -- this will double-call load event
 end)
 
 --build
