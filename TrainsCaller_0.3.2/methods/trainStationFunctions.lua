@@ -12,7 +12,7 @@ local function getNetworkGhosts(network)
 	--if more items are required as those available, add the item to the list
 	for item,quantity in pairs (ghostItems) do
 		if quantity>network.get_item_count(item) then				
-			table.insert(result,item)
+			table.insert(result,{type="item",name=item})
 		end
 	end
 	return result
@@ -40,7 +40,7 @@ function getStationRequiredItems()
 						local quantity1=greenCircuit.get_signal(circuitCondition.signal1) + redCircuit.get_signal(circuitCondition.signal1)
 						local quantity2=tonumber(circuitCondition.signal2) or (greenCircuit.get_signal(circuitCondition.signal2) + redCircuit.get_signal(circuitCondition.signal2))
 						if compareData(circuitCondition.comparator,quantity1,quantity2) then
-							table.insert(stationItems[stationData.station.unit_number],circuitCondition.resultSignal.name)
+							table.insert(stationItems[stationData.station.unit_number],circuitCondition.resultSignal)
 						end
 					end
 				end

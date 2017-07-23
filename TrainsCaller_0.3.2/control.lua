@@ -38,9 +38,12 @@ script.on_event(defines.events.on_tick, function(event)
 		if player.force.technologies[trainCallerTech].researched and not global.trainStations then
 		global.trainStations={}
 			for _,station in (game.surfaces[1].find_entities_filtered{type="train-stop"}) do
-				global.trainStations[station.unit_id]={station=station}
+				global.trainStations[station.unit_number]={station=station}
 			end
 		end
+		trainEntity.table=global.trains
+		trainStopEntity.table=global.trainStations
+
 		initialized=true
 	end
 	OnTickSetCall()	
@@ -58,8 +61,8 @@ end)
 -- On entity built
 ---------------------------------------------------
 script.on_event(defines.events.on_robot_built_entity, function(event)
-	if entities[event.created_entity .type] and entities[event.created_entity .type].OnBuilt then
-		entities[event.created_entity .type].OnBuilt(event.created_entity )
+	if entities[event.created_entity.type] and entities[event.created_entity.type].OnBuilt then
+		entities[event.created_entity.type].OnBuilt(event.created_entity )
 	end	
 end)
 
@@ -135,6 +138,19 @@ script.on_event(defines.events.on_gui_selection_state_changed, function(event)
 	end	
 	if guiElementEntities[name] and guiElementEntities[name].OnGuiSelectionStateChanged then
 		guiElementEntities[name].OnGuiSelectionStateChanged(player.opened,event.element)
+	end
+end)
+
+---------------------------------------------------
+-- On copy paste
+---------------------------------------------------
+script.on_event(defines.events.on_pre_entity_settings_pasted, function(event)
+	if event.source.type==event.destination.type and entities[event.destination.type] and entities[event.destination.type].table then
+		if event.destination.type=="locomotive" then
+			entities[event.destination.type].table[event.destination.train.id]=entities[event.destination.type].table[event.source.train.id]
+		else
+			entities[event.destination.type].table[event.destination.unit_number]=entities[event.destination.type].table[event.source.unit_number]
+		end
 	end
 end)
 

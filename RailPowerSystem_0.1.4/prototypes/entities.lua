@@ -65,7 +65,8 @@ createData("electric-pole","small-electric-pole",ghostElectricPole,
 {
 	icon = "__base__/graphics/icons/small-electric-pole.png",
     minable = {mining_time = 0.5, result = railPole},
-	fast_replaceable_group = nil,
+	collision_box = {{0, 0}, {0, 0}},
+    fast_replaceable_group = nil,
 	eflags = {"placeable-neutral", "player-creation", "building-direction-8-way", "filter-directions", "fast-replaceable-no-build-while-moving"},
 	supply_area_distance = 1,
 	pictures ={

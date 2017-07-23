@@ -4,9 +4,9 @@ local function isTrainRequired(station,trainData)
 	end
 	local trainContent=trainData.train.get_contents()
 	local trainFluidContent=trainData.train.get_fluid_contents()
-	for _,stationRequiredItem in pairs(stationItems[station.unit_number]) do
-		if trainContent[stationRequiredItem] and trainContent[stationRequiredItem]>0 or trainFluidContent[stationRequiredItem] then
-			return stationRequiredItem
+	for _,stationRequiredElement in pairs(stationItems[station.unit_number]) do
+		if trainContent[stationRequiredElement.name] and trainContent[stationRequiredElement.name]>0 or trainFluidContent[stationRequiredElement.name] then
+			return stationRequiredElement
 		end
 	end
 	return nil
@@ -29,12 +29,12 @@ function findStation(trainData)
 	--Does it stay at same station
 	if currentStation and currentStation.valid==true and global.trainStations[currentStation.unit_number] and currentStation.backer_name~=trainData.defaultStation then
 	--Current station still required this train
-		local firstRequiredItem=isTrainRequired(currentStation,trainData)
-		if firstRequiredItem then
-			if remote.interfaces["TrainsSignalSender"]  and (not trainData.RequiredItem or trainData.RequiredItem~=firstRequiredItem) then
+		local firstRequiredElement=isTrainRequired(currentStation,trainData)
+		if firstRequiredElement then
+			if remote.interfaces["TrainsSignalSender"]  and (not trainData.RequiredItem or trainData.RequiredItem~=firstRequiredElement) then
 				remote.call("TrainsSignalSender","clearSignals",trainData.train)
-				remote.call("TrainsSignalSender","setSignals",trainData.train,{{signal={type="item",name=firstRequiredItem},count=1}})
-				trainData.RequiredItem=firstRequiredItem
+				remote.call("TrainsSignalSender","setSignals",trainData.train,{{signal=firstRequiredElement,count=1}})
+				trainData.RequiredItem=firstRequiredElement
 				if not global.trainStations[currentStation.unit_number].previousReadCargoState then
 					global.trainStations[currentStation.unit_number].previousReadCargoState=trainData.train.station.get_control_behavior().read_from_train	
 				end
@@ -54,11 +54,11 @@ function findStation(trainData)
 	--move to another station
 	-- search for required call
 	for key,data in pairs(global.trainStations) do
-		firstRequiredItem=isTrainRequired(data.station,trainData)
-		if data and (not data.trainCalled or data.trainCalled==trainData.train.id) and firstRequiredItem then
+		firstRequiredElement=isTrainRequired(data.station,trainData)
+		if data and (not data.trainCalled or data.trainCalled==trainData.train.id) and firstRequiredElement then
 			data.trainCalled=trainData.train.id
 			if remote.interfaces["TrainsSignalSender"] then
-				remote.call("TrainsSignalSender","setSignals",trainData.train,{{signal={type="item",name=firstRequiredItem},count=1}})
+				remote.call("TrainsSignalSender","setSignals",trainData.train,{{signal=firstRequiredElement,count=1}})
 			end
 			return data.station.backer_name
 		end

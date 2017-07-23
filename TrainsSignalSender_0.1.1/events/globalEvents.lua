@@ -11,12 +11,12 @@ function OnTrainStateChanged(train)
 	if not global.trains[train.id] or not global.trains[train.id].signals then
 		return
 	end
-	if not train.station then
-		if global.trains[train.id].station and global.trains[train.id].station.valid then
+	if not train.station  then
+		if global.trains[train.id].station and global.trains[train.id].station.valid and entities[global.trains[train.id].station.name] then
 			getConstantCombinator(global.trains[train.id].station).get_or_create_control_behavior().parameters=nil
 		end
 		global.trains[train.id].station=nil
-	else
+	elseif entities[train.station.name] then
 		global.trains[train.id].station=train.station
 		for _,data in pairs(global.trains[train.id].signals) do
 			if data and type(data)=='table' and data.signals then
@@ -36,12 +36,6 @@ end
 
 trainStopEntity.OnBuilt=function(entity)
 	getConstantCombinator(entity)
-end
-
-trainEntity.OnRemoved=function(entity)
-	if global.trains then
-		global.trains[entity.unit_number]=nil
-	end
 end
 
 trainStopEntity.OnRemoved=function(entity)	

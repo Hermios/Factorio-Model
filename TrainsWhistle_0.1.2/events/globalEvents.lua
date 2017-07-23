@@ -111,8 +111,10 @@ trainEntity.OnRemoved=function(entity)
 		return
 	end
 	for index,trainData in pairs(global.trains) do
-		if not trainData.train or trainData.train.valid then
-			trainData.station.destroy()
+		if not trainData.train or not trainData.train.valid then
+			if trainData.station and trainData.station.valid then
+				trainData.station.destroy()
+			end
 			global.trains[index]=nil
 		end
 	end
