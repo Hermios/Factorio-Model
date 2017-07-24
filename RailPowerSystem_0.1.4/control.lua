@@ -1,18 +1,12 @@
 require "constants"
+require "localData"
 require "libs.dataLibs"
-require "libs.railPowerLib"
-require "libs.eventsHandler"
-require "controls.rail"
-require "controls.train"
+require "events.globalEvents"
+require "methods.dataBuilder"
+require "methods.railMethods"
+require "methods.trainMethods"
 require "methods.remoteBuilder"
 init=false
-script.on_init(function(event)
-	OnLoad()
-end)
-
-script.on_load(function (event)
-	OnLoad()
-end)
 
 --build
 script.on_event(defines.events.on_robot_built_entity, function(event)
@@ -35,10 +29,8 @@ end)
 --tick
 script.on_event(defines.events.on_tick,function(event)
 if not init then
-	if remote.interfaces.farl then
-		remote.call("farl", "add_entity_to_trigger", straightRailPower)
-		remote.call("farl", "add_entity_to_trigger", curvedRailPower)
-	end
+	InitDataLibs()
+	InitData()
 	init=true
 end
 	OnTick()

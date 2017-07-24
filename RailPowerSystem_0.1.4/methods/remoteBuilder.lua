@@ -1,6 +1,8 @@
 addRail=function(straightRailName,curvedRailName)
-	entities[railName]=railPower
-	entities[curvedRailName]=railPower
+	entities[straightRailName].methods=railPower
+	railType[straightRailName]="straight"
+	entities[curvedRailName].methods=railPower
+	railType[curvedRailName]="curved"
 end
 
 function InitRemote()

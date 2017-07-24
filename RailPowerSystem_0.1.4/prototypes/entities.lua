@@ -23,11 +23,11 @@ createData("electric-energy-interface","electric-energy-interface",railAccu,
 	energy_source =
     {
       type = "electric",
-      buffer_capacity = "11kJ",
-      input_flow_limit = "15MJ",
-      drain = "0J",
+      buffer_capacity = "30MJ",
+      input_flow_limit = "30MJ",
+      drain = "10MJ",
       usage_priority = "primary-input",
-	  output_flow_limit = "15MJ",
+	  output_flow_limit = "30MJ",
     },
 	picture =
     {
@@ -37,7 +37,7 @@ createData("electric-energy-interface","electric-energy-interface",railAccu,
       direction_count = 4,
       shift = {0, 0},
     },
-	
+	working_sound =nil
 }
 )
 

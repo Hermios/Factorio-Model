@@ -1,0 +1,14 @@
+entities={}
+railType={}
+electricPole={}
+railPower={}
+ghostElectricPoles={}
+entityghosts={}
+entities[railPole]=electricPole
+entities[straightRailPower]=railPower
+railType[straightRailPower]="straight"
+entities[curvedRailPower]=railPower
+railType[curvedRailPower]="curved"
+entities[ghostElectricPole]=ghostElectricPoles
+entities["entity-ghost"]=entityghosts
+basePowerMax=0

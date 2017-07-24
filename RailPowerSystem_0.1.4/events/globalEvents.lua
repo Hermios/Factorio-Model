@@ -1,51 +1,30 @@
-local searchDirection = {{1,0},{1,1},{0,1},{-1,1},{-1,0},{-1,-1},{0,-1},{1,-1}}
-
-local electricPole={}
-local railPower={}
-local ghostElectricPoles={}
-local entityghosts={}
-entities[railPole]=electricPole
-entities[straightRailPower]=railPower
-entities[curvedRailPower]=railPower
-entities[ghostElectricPole]=ghostElectricPoles
-entities["entity-ghost"]=entityghosts
-
-local railFromPole=function(entity,expectedItemType)
-	local x=entity.position.x+searchDirection[entity.direction+1][1]
-	local y=entity.position.y+searchDirection[entity.direction+1][2]
-	return entity.surface.find_entities_filtered{area = {{x-0.5,y-0.5},{x+0.5,y+0.5}}, name= expectedItemType}[1]
-end
-
-local poleGhostEntities=function(entity)
-	local x=entity.position.x
-	local y=entity.position.y
-	return entity.surface.find_entities_filtered{area={{x-0.5,y-0.5},{x+0.5,y+0.5}},name=ghostElectricPoleNotSelectable}
-end
-
-local function connectWires(firstGhost,secondGhost)	
-	if firstGhost and secondGhost then
-		firstGhost.connect_neighbour{wire=defines.wire_type.red,target_entity=secondGhost}
-		firstGhost.connect_neighbour{wire=defines.wire_type.green,target_entity=secondGhost}
-		firstGhost.connect_neighbour(secondGhost)
-	end
-end
-
-local function connectGhostsInsideRail(rail)
-	local ghostRailsEntities=railGhostEntities(rail)
-	if #ghostRailsEntities<2 then
-		return
-	end
-	for i=1,#ghostRailsEntities-1,1 do
-		connectWires(ghostRailsEntities[i],ghostRailsEntities[i+1])		
-	end
-end
-
 function onGlobalBuilt(entity)
 	if entity.type=="electric-pole" then	
 		for _,neighbour in pairs(entity.neighbours.copper) do
 			if neighbour.name == ghostElectricPoleNotSelectable or entity.name==ghostElectricPoleNotSelectable then
 				entity.disconnect_neighbour(neighbour)
 			end
+		end
+	end
+end
+
+function OnBuildEntity(entity)
+	-- remove automatic connected cables
+	if entities[entity.name] and entities[entity.name].onBuilt then
+		entities[entity.name].onBuilt(entity)
+	end	
+end
+
+function OnPreRemoveEntity(entity)
+	if entities[entity.name] and entities[entity.name].onRemove then
+		entities[entity.name].onRemove(entity)
+	end	
+end
+
+function OnTick()
+	for _,eTrain in pairs(global.electricTrains) do
+		if eTrain and eTrain.valid and entities[eTrain.name] and entities[eTrain.name].onTick then
+			entities[eTrain.name].onTick(eTrain)
 		end
 	end
 end
