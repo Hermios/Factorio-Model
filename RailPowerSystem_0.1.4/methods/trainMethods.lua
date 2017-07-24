@@ -7,7 +7,6 @@ trains.onTick=function (entity)
 	if not entities[rail.name] then
 		return
 	end
-	basePowerMax=5000
 	--reset previous accu passed from train, so it doesn't drain useless energy
 	if previousAccuTable[entity.unit_number ] and previousAccuTable[entity.unit_number ].valid then
 		previousAccuTable[entity.unit_number ].electric_drain=0
