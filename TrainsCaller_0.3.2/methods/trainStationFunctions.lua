@@ -48,7 +48,6 @@ function getStationRequiredItems()
 		else
 			global.trainStations[index]=nil
 		end
-		print(stationData.station.unit_number.."/"..#stationItems[stationData.station.unit_number])
 	end
 end
 

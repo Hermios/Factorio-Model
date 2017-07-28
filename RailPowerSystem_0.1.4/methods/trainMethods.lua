@@ -9,7 +9,7 @@ trains.onTick=function (entity)
 	end
 	--reset previous accu passed from train, so it doesn't drain useless energy
 	if previousAccuTable[entity.unit_number ] and previousAccuTable[entity.unit_number ].valid then
-		previousAccuTable[entity.unit_number ].electric_drain=0
+		--previousAccuTable[entity.unit_number ].electric_drain=0
 		previousAccuTable[entity.unit_number ]=nil
 	end
 	
@@ -18,7 +18,7 @@ trains.onTick=function (entity)
 		return
 	end
 	local ghostAccu=ghostRailAccu(rail)
-	ghostAccu.electric_drain = requiredPower
+	--ghostAccu.electric_drain = requiredPower
 	local max_power = ghostAccu.energy
 	local power_transfer = 0
 	if (max_power < requiredPower) then

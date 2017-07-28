@@ -1,0 +1,10 @@
+{
+  "name": "DebugMethods",
+  "version": "0.0.1",
+  "title": "DebugMethods",
+  "author": "Hermios",
+  "homepage": "https://forums.factorio.com/viewtopic.php?f=95&t=51096",
+  "dependencies": ["base>=0.15.10"],
+  "description": "Internal Debug",
+  "factorio_version": "0.15.10"
+}
