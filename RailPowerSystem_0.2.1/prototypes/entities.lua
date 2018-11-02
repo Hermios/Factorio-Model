@@ -16,19 +16,20 @@ createData("locomotive","locomotive",hybridTrain,
 createData("rail-signal","rail-signal",prototypeConnector,
 {
 	fast_replaceable_group = nil,
-	selection_box = {{-0.4, -0.4}, {0.4, 0.4}},
+	selection_box={{0, 0}, {0, 0}},
     drawing_box = {{-0.5, -2.6}, {0.5, 0.5}},
 	animation =
     {
 		filename="__"..ModName.."__/graphics/entity/"..railPoleConnector..".png",
 		priority = "high",
-		line_length = 1,
-		width = 123,
-		height = 124,
+		width = 189,
+		height = 160,
 		frame_count = 1,
-		direction_count = 8,
-		shift = {0.7, -1.5},
+		direction_count = 8
     },
+	green_light = {intensity = 0, size = 0.1, color={g=1}},
+    orange_light = {intensity = 0, size = 0.1, color={r=1, g=0.5}},
+    red_light = {intensity = 0, size = 0.1, color={r=1}},
 	circuit_connector_sprites=nil
 })
 
@@ -37,16 +38,15 @@ createData("electric-pole","small-electric-pole",railPoleConnector,
 	icon = "__base__/graphics/icons/small-electric-pole.png",
     minable = {mining_time = 0.5, result = prototypeConnector},
 	collision_box = {{0, 0}, {0, 0}},
-    fast_replaceable_group = nil,
-	eflags = {"placeable-neutral", "player-creation", "building-direction-8-way", "filter-directions", "fast-replaceable-no-build-while-moving","placeable-off-grid"},
+	fast_replaceable_group = nil,
+	flags = {"placeable-neutral", "player-creation","fast-replaceable-no-build-while-moving","placeable-off-grid"},
 	supply_area_distance = 1,
 	pictures ={
-		filename="__"..ModName.."__/graphics/entity/"..railPoleConnector..".png",
+		filename="__"..ModName.."__/graphics/entity/empty.png",
 		line_length = 1,
-		width = 123,
-		height = 124,
-		direction_count = 8,
-		shift = {0.7, -1.2}
+		width = 1,
+		height = 1,
+		direction_count = 1
     },
 	track_coverage_during_build_by_moving = false,
 	connection_points =
@@ -60,9 +60,9 @@ createData("electric-pole","small-electric-pole",railPoleConnector,
         },
         wire =
         {
-          copper = {-0.03125, -2.46875},
-          green = {-0.34375, -2.46875},
-          red = {0.25, -2.46875}
+          copper = {0, -1.9},
+          green = {0, -1.9},
+          red = {0, -1.9}
         }
       },
     },
