@@ -1,0 +1,6 @@
+ModName="TrainsWhistle"
+trainWhistleEquipment="trainWhistleEquipment"
+trainWhistleEquipmentGrid="train-Whistle-Equipment-Grid"
+technologyName="trainWhistleTech"
+onTrainWhistled="on_train_whistled"
+trainStopGhost="trainStopGhost"
