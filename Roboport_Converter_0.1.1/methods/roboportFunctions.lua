@@ -2,7 +2,7 @@ RoboportPrototype={}
 
 function RoboportPrototype:new(entity,data)
 	if entity.valid==false then
-		return false
+		return
 	end
 	local sender=(data or {}).sender
 	if not sender then

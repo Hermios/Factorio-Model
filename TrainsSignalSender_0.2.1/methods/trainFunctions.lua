@@ -1,12 +1,15 @@
 TrainPrototype={}
 
 function TrainPrototype:new(entity, sourceData)
+	if entity.valid==false then
+		return
+	end
 	local o=sourceData or 
 	{
+		entity=entity,
 		signals={},
 		station=entity.station	
 	}
-    o.entity=entity
 	setmetatable(o, self)
     self.__index = self
 	return o

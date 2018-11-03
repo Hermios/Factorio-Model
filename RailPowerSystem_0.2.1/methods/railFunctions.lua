@@ -60,7 +60,7 @@ end
 
 function RailPrototype:new(entity,data)
 	if entity.valid==false then
-		return false
+		return
 	end
 	local accu=(data or {}).accu
 	

@@ -2,7 +2,7 @@ TrainPrototype={}
 
 function TrainPrototype:new(entity,data)
 	if entity.valid==false then
-		return false
+		return
 	end
 	local o = data or
 	{

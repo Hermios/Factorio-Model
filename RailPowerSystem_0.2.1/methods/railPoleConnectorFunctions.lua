@@ -9,7 +9,7 @@ end
 
 function RailPoleConnectorPrototype:new(entity,data)
 	if entity.valid==false then
-		return false
+		return
 	end
 	local poleEntity=(data or {}).poleEntity
 	if not poleEntity then

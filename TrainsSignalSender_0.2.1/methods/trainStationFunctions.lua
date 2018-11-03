@@ -1,23 +1,23 @@
 TrainStopPrototype={}
 
-function TrainStopPrototype:new(trainStop,data)
-	if trainStop.valid==false then
-		return false
+function TrainStopPrototype:new(entity,data)
+	if entity.valid==false then
+		return
 	end
 	local sender=(data or {}).sender
 	if not sender then
-		sender = trainStop.surface.create_entity({name="ghost-constant-combinator",position=trainStop.position,force=trainStop.force})
+		sender = entity.surface.create_entity({name="ghost-constant-combinator",position=entity.position,force=entity.force})
 		sender.operable = false
 		sender.minable = false
 		sender.destructible = false
-		trainStop.connect_neighbour{wire=defines.wire_type.green,target_entity=sender}
-		trainStop.connect_neighbour{wire=defines.wire_type.red,target_entity=sender}
+		entity.connect_neighbour{wire=defines.wire_type.green,target_entity=sender}
+		entity.connect_neighbour{wire=defines.wire_type.red,target_entity=sender}
 	end
 	local o = data or
 	{
+		entity=entity,
 		sender=sender
 	}   
-	o.entity=trainStop
     setmetatable(o, self)
     self.__index = self
 	return o

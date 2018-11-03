@@ -197,7 +197,7 @@ end)
 
 -- On research finished
 script.on_event(defines.events.on_research_finished, function(event)
-	if event.research.name==technologyName then			
+	if event.research.name==technologyName and OnResearchFinished then			
 		OnResearchFinished()
 	end
 end)

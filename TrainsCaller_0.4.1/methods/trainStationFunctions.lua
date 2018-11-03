@@ -1,31 +1,31 @@
 TrainStopPrototype={}
 
-function TrainStopPrototype:new(trainStop,sourceData)
-    if trainStop.valid==false then
-		return false
+function TrainStopPrototype:new(entity,sourceData)
+    if entity.valid==false then
+		return
 	end
 		--add receiver
 	local receiver=(sourceData or {}).receiver
 	if not receiver then
-		local receiverPosition=trainStop.position
-		if trainStop.direction==0 then 
+		local receiverPosition=entity.position
+		if entity.direction==0 then 
 			receiverPosition.x=receiverPosition.x+0.5
 			receiverPosition.y=receiverPosition.y+0.9
-		elseif trainStop.direction==2 then 
+		elseif entity.direction==2 then 
 			receiverPosition.x=receiverPosition.x+0.2
 			receiverPosition.y=receiverPosition.y+0.6
-		elseif trainStop.direction==4 then 
+		elseif entity.direction==4 then 
 			receiverPosition.x=receiverPosition.x-0.5
 			receiverPosition.y=receiverPosition.y+0.5
-		elseif trainStop.direction==6 then 
+		elseif entity.direction==6 then 
 			receiverPosition.x=receiverPosition.x-0.8
 			receiverPosition.y=receiverPosition.y+0.5
 		end
-		local receiverDirection=trainStop.direction-2
+		local receiverDirection=entity.direction-2
 		if receiverDirection==-2 then
 			receiverDirection=6
 		end
-		receiver=game.surfaces[1].create_entity{name=trainStopReceiver,position=receiverPosition,direction=receiverDirection,force=trainStop.force}
+		receiver=game.surfaces[1].create_entity{name=trainStopReceiver,position=receiverPosition,direction=receiverDirection,force=entity.force}
 		receiver.destructible=false
 		receiver.operable=false
 		receiver.minable=false
@@ -33,11 +33,11 @@ function TrainStopPrototype:new(trainStop,sourceData)
 	end
 	local o=sourceData or 
 	{
+		entity=entity,
 		receiver=receiver,
 		signalsPerTrain={},
 		requestedSignals={}
 	}   
-	o.entity=trainStop
     setmetatable(o, self)
     self.__index = self
 	return o

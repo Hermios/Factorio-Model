@@ -2,7 +2,7 @@ TrainStopPrototype={}
 
 function TrainStopPrototype:new(entity,data)
 	if entity.valid==false then
-		return false
+		return
 	end
 	local pos1=entity.position
 	local pos2=rail.position

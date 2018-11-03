@@ -1,13 +1,16 @@
 TrainPrototype={}
 
 function TrainPrototype:new (entity,sourceData)
+	if entity.valid==false then
+		return false
+	end
 	local o=sourceData or 
 	{
+		entity=entity,
 		queue={},
 		allowMultipleCalls=true,
 		conditions={{type="inactivity",ticks=180,compare_type="and"}}
 	}
-    o.entity=entity
 	setmetatable(o, self)
     self.__index = self
 	return o
