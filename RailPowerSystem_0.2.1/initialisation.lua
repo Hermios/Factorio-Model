@@ -15,6 +15,7 @@ end
 function InitData()
 	railType[electricStraightRail]="straight"
 	railType[electricCurvedRail]="curved"
+	locomotiveType[hybridTrain]=true
 	if remote.interfaces.farl then
 		remote.call("farl", "add_entity_to_trigger", electricStraightRail)
 		remote.call("farl", "add_entity_to_trigger", electricCurvedRail)

@@ -5,6 +5,7 @@ StraightRail={}
 CurvedRail={}
 
 eventsControl["rail-signal"]=Connector
+eventsControl["electric-pole"]=Connector
 eventsControl["straight-rail"]=StraightRail
 eventsControl["curved-rail"]=CurvedRail
 
@@ -20,14 +21,15 @@ Connector.OnBuilt=function(entity)
 		listRailPoleConnectors[railPoleConnector.entity.unit_number]=railPoleConnector
 		local railId=listRailPoleConnectors[railPoleConnector.entity.unit_number]:getConnectedRailId()
 		if listRails[railId] then
-		player.print("X")
 			listRails[railId]:connectCloserNodes(listRailPoleConnectors[railPoleConnector.entity.unit_number])
 		end
 	end
 end
 
-Connector.OnRemove=function(entity)
-	listRailPoleConnectors[entity.unit_number]:remove()
+Connector.OnRemoved=function(entity)
+	if listRailPoleConnectors[entity.unit_number] then
+		listRailPoleConnectors[entity.unit_number]:remove()
+	end
 end
 
 StraightRail.OnBuilt=function(entity)
@@ -37,20 +39,20 @@ StraightRail.OnBuilt=function(entity)
 	end
 end
 
-StraightRail.OnRemove=function(entity)
-	if railType[entity.name]=="straight" then
-		listRails[entity.unit_number]:remove()			
-	end
-end
-
-StraightRail.OnBuilt=function(entity)
+CurvedRail.OnBuilt=function(entity)
 	if railType[entity.name]=="curved" then
 		listRails[entity.unit_number]=RailPrototype:new(entity)		
 		listRails[entity.unit_number]:connectToOtherRails()
 	end
 end
 
-StraightRail.OnRemove=function(entity)
+StraightRail.OnRemoved=function(entity)
+	if railType[entity.name]=="straight" and listRails[entity.unit_number] then
+		listRails[entity.unit_number]:remove()			
+	end
+end
+
+CurvedRail.OnRemoved=function(entity)
 	if railType[entity.name]=="curved" then
 		listRails[entity.unit_number]:remove()			
 	end

@@ -1,5 +1,8 @@
 --train
-createData("item-with-entity-data","locomotive",hybridTrain)
+createData("item-with-entity-data","locomotive",hybridTrain,
+{
+	icon = "__"..ModName.."__/graphics/icons/"..hybridTrain..".png",
+})
 
 --circuit's components
 createData("item","rail-signal",prototypeConnector)

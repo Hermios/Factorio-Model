@@ -9,6 +9,7 @@ end
 --train
 createData("locomotive","locomotive",hybridTrain,
 {
+	icon = "__"..ModName.."__/graphics/icons/"..hybridTrain..".png",
 	color = { r = 100, g = 100, b = 200 },
 })
 
@@ -39,19 +40,118 @@ createData("electric-pole","small-electric-pole",railPoleConnector,
     minable = {mining_time = 0.5, result = prototypeConnector},
 	collision_box = {{0, 0}, {0, 0}},
 	fast_replaceable_group = nil,
-	flags = {"placeable-neutral", "player-creation","fast-replaceable-no-build-while-moving","placeable-off-grid"},
+	flags = {"placeable-neutral", "player-creation","fast-replaceable-no-build-while-moving","placeable-off-grid","building-direction-8-way"},
 	supply_area_distance = 1,
 	pictures ={
-		filename="__"..ModName.."__/graphics/entity/empty.png",
+		filename="__"..ModName.."__/graphics/entity/"..railPoleConnector..".png",
+		priority = "high",
 		line_length = 1,
-		width = 1,
-		height = 1,
-		direction_count = 1
+		width = 189,
+		height = 160,
+		direction_count = 8
     },
 	track_coverage_during_build_by_moving = false,
 	connection_points =
     {
       {
+        shadow =
+        {
+          copper = {2.55, 0.4},
+          green = {2.0, 0.4},
+          red = {3.05, 0.4}
+        },
+        wire =
+        {
+          copper = {0, -1.9},
+          green = {0, -1.9},
+          red = {0, -1.9}
+        }
+      },
+	  {
+        shadow =
+        {
+          copper = {2.55, 0.4},
+          green = {2.0, 0.4},
+          red = {3.05, 0.4}
+        },
+        wire =
+        {
+          copper = {0, -1.9},
+          green = {0, -1.9},
+          red = {0, -1.9}
+        }
+      },
+	  {
+        shadow =
+        {
+          copper = {2.55, 0.4},
+          green = {2.0, 0.4},
+          red = {3.05, 0.4}
+        },
+        wire =
+        {
+          copper = {0, -1.9},
+          green = {0, -1.9},
+          red = {0, -1.9}
+        }
+      },
+	  {
+        shadow =
+        {
+          copper = {2.55, 0.4},
+          green = {2.0, 0.4},
+          red = {3.05, 0.4}
+        },
+        wire =
+        {
+          copper = {0, -1.9},
+          green = {0, -1.9},
+          red = {0, -1.9}
+        }
+      },
+	  {
+        shadow =
+        {
+          copper = {2.55, 0.4},
+          green = {2.0, 0.4},
+          red = {3.05, 0.4}
+        },
+        wire =
+        {
+          copper = {0, -1.9},
+          green = {0, -1.9},
+          red = {0, -1.9}
+        }
+      },
+	  {
+        shadow =
+        {
+          copper = {2.55, 0.4},
+          green = {2.0, 0.4},
+          red = {3.05, 0.4}
+        },
+        wire =
+        {
+          copper = {0, -1.9},
+          green = {0, -1.9},
+          red = {0, -1.9}
+        }
+      },
+	  {
+        shadow =
+        {
+          copper = {2.55, 0.4},
+          green = {2.0, 0.4},
+          red = {3.05, 0.4}
+        },
+        wire =
+        {
+          copper = {0, -1.9},
+          green = {0, -1.9},
+          red = {0, -1.9}
+        }
+      },
+	  {
         shadow =
         {
           copper = {2.55, 0.4},
@@ -77,6 +177,7 @@ createData("electric-pole",railPoleConnector,circuitNode,
 	flags = {"not-on-map","placeable-off-grid"},
     drawing_box = {{0, 0}, {0, 0}},
 	maximum_wire_distance =3.99, 
+	supply_area_distance =0.5,
 	pictures ={
       filename = "__"..ModName.."__/graphics/entity/empty.png",
 	  line_length = 1,
@@ -129,8 +230,21 @@ createData("electric-energy-interface","electric-energy-interface",railElectricA
       direction_count = 1,
       shift = {0, 0},
     },
-	working_sound =nil
+	working_sound =
+    {
+      sound =
+      {
+        filename = "__base__/sound/accumulator-working.ogg",
+        volume = 0
+      },
+      idle_sound =
+      {
+        filename = "__base__/sound/accumulator-idle.ogg",
+        volume = 0
+      }
+	}
 })
+
 --rail
 createData("straight-rail","straight-rail",electricStraightRail,
 {		

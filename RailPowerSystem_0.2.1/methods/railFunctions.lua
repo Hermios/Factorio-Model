@@ -1,5 +1,5 @@
 local curvedRailpointsPositions={
-{{x=-1.2,y=-2.2},{x=0,y=0},{x=1.2,2.2}},
+{{x=-1.2,y=-2.2},{x=0,y=0},{x=1.2,y=2.2}},
 {{x=-1.2,y=2.2},{x=0,y=0},{x=1.2,y=-2.2}},
 {{x=-2.2,y=1.2},{x=0,y=0},{x=2.2,y=-1.2}},
 {{x=-2.2,y=-1.2},{x=0,y=0},{x=2.2,y=1.2}},
@@ -38,8 +38,15 @@ local createNodes=function(entity)
 		return result
 	end	
 	if entity.type=="curved-rail" then
-		for index,position in ipairs(curvedRailpointsPositions[entity.direction]) do
-			table.insert(result,game.surfaces[1].create_entity{name=circuitNode,position=position,force=entity.force})
+		for index,position in ipairs(curvedRailpointsPositions[entity.direction+1]) do
+			table.insert(result,game.surfaces[1].create_entity{
+				name=circuitNode,
+				position={
+					entity.position.x+position.x,
+					entity.position.y+position.y
+				},
+				force=entity.force
+			})
 			result[index].disconnect_neighbour()
 			if index>1 then
 				connectAllWires(result[index-1],result[index])
@@ -56,13 +63,19 @@ function RailPrototype:new(entity,data)
 		return false
 	end
 	local accu=(data or {}).accu
+	
+	local circuitNodes=(data or {}).circuitNodes or createNodes(entity) 
 	if not accu then
-		accu = game.surfaces[1].create_entity{name=railElectricAccu,position=entity.position,force=entity.force}
+		accu = game.surfaces[1].create_entity
+		{
+			name=railElectricAccu,
+			position=(circuitNodes[2] or circuitNodes[1]).position,
+			force=entity.force
+		}
 		accu.operable = false
 		accu.minable = false
 		accu.destructible = false
 	end
-	local circuitNodes=(data or {}).circuitNodes or createNodes(entity) 
 	local o = data or
 	{
 		entity=entity, 
@@ -95,12 +108,11 @@ end
 
 function RailPrototype:connectToOtherRails()
 	local connectedRails={}
-	for rail_direction=1,2 do
-		for rail_connection_direction=1,3 do
-			for _,rail in pairs(self.entity.get_connected_rail{rail_direction=rail_direction,rail_connection_direction=rail_connection_direction}) do
-				if rail and listRails[rail.unit_number] then
-					self:connectCloserNodes(listRails[rail.unit_number])
-				end
+	for rail_direction=0,1 do
+		for rail_connection_direction=0,2 do
+			local connectedRail= self.entity.get_connected_rail{rail_direction=rail_direction,rail_connection_direction=rail_connection_direction}
+			if connectedRail and listRails[connectedRail.unit_number] then
+				self:connectCloserNodes(listRails[connectedRail.unit_number])
 			end
 		end
 	end
