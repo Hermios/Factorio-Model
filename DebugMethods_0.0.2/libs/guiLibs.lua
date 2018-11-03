@@ -44,11 +44,13 @@ function LuaGuiObject:new(gui,path,newName)
 		path=(path or "")..guiName,
 		onClick=gui.onClick,
 		childGuiObject=gui.childGuiObject,
-		children={}
+		default_type=gui.default_type,
+		children={},
 	}
 	gui.content=nil
 	gui.onClick=nil
 	gui.childGuiObject=nil
+	gui.default_type=nil
 	o.gui=clone(gui)
 	o.gui.name=guiName
 	setmetatable(o, self)
@@ -64,8 +66,10 @@ function LuaGuiObject:clone(startPath,newName)
 		gui=clone(self.gui),
 		path=(startPath or "")..guiName,
 		onClick=self.gui.onClick,
+		default_type=self.gui.default_type,
 		childGuiObject=self.gui.childGuiObject,
 		children={}
+		
 	}
 	for index,child in pairs (self.children) do
 		o.children[index]=child:clone(o.path..">")
@@ -85,6 +89,7 @@ function LuaGuiObject:updateGuiElement(data)
 		self.gui.text=data[self.content]
 	elseif self.gui.type=="choose-elem-button" then	
 		self.gui[self.gui.elem_type]=data[self.content]
+		self.gui[self.gui.elem_type].type=self.gui[self.gui.elem_type].type or self.default_type
 	elseif self.gui.type=="drop-down" then
 		local i=0
 		while (i<#(self.gui.items) and self.gui.selected_index==0) do if self.gui.items[i]==data[self.content] then self.gui.selected_index=i end i=i+1 end		
@@ -104,6 +109,7 @@ function LuaGuiObject:updateData(guiElement,data)
 		data[self.content]=guiElement.text
 	elseif guiElement.type=="choose-elem-button" then	
 		data[self.content]=guiElement.elem_value
+		data[self.content]=data[self.content] or {type=self.default_type}
 	elseif guiElement.type=="drop-down" then
 		data[self.content]=guiElement.items[guiElement.selected_index]
 	end

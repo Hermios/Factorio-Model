@@ -1,4 +1,10 @@
-require "initialisation"
+eventsControl={}
+require "libs.dataLibs"
+require "libs.guiLibs"
+require "libs.entityLibs"
+require "debug.logging"
+require "methods.constants"
+require "methods.initialisation"
 
 local initialized=false
 
@@ -78,8 +84,8 @@ script.on_event(defines.events.on_player_removed_equipment, function(event)
 	if technologyName and not player.force.technologies[technologyName].researched then			
 		return		
 	end	
-	if eventsControl[event.equipment] and eventsControl[event.equipment].OnEquipmentRemoved then
-		eventsControl[event.equipment].OnEquipmentRemoved(event)
+	if eventsControl[event.equipment.name] and eventsControl[event.equipment].OnEquipmentRemoved then
+		eventsControl[event.equipment.name].OnEquipmentRemoved(event)
 	end
 end)
 
@@ -193,5 +199,15 @@ end)
 script.on_event(defines.events.on_research_finished, function(event)
 	if event.research.name==technologyName then			
 		OnResearchFinished()
+	end
+end)
+
+-- On Custom key fired
+script.on_event(listCustomEvents or {},function(event)
+	if technologyName and not player.force.technologies[technologyName].researched then			
+		return		
+	end
+	if (listCustomEvents or {})[event.name] then
+		listCustomEvents[event.name](event)
 	end
 end)

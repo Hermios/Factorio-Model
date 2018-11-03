@@ -2,11 +2,13 @@ function InitDataLibs()
 	player=game.players[1]
 end
 
-function setLocalList(globalData,prototype,list)
-	globalData=globalData or {}
+function setLocalList(globalData,prototype)
+	local globalData=globalData or {}
+	local list={}
 	for id,data in pairs(globalData) do
 		list[id]=prototype:new (data.entity,data)
 	end
+	return list
 end
 
 function getUnitId(entity)

@@ -1,8 +1,0 @@
-require "constants"
-require "libs.logging"
-require "libs.dataLibs"
---require "libs.railPowerLib"
-require "prototypes.items"
-require "prototypes.recipes"
-require "prototypes.techs"
-require "prototypes.entities"
