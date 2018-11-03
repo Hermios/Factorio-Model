@@ -1,5 +1,4 @@
-require "constants"
-require "libs.logging"
+require "methods.constants"
 require "libs.dataLibs"
 require "prototypes.items"
 require "prototypes.recipes"

@@ -1,4 +1,4 @@
-require "constants"
+require "methods.constants"
 require "libs.dataLibs"
 require "prototypes.items"
 require "prototypes.entities"
