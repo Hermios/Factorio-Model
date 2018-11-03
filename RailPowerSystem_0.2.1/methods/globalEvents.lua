@@ -1,5 +1,3 @@
-eventsControl={}
-
 Connector={}
 StraightRail={}
 CurvedRail={}

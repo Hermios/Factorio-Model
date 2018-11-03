@@ -1,5 +1,3 @@
-eventsControl={}
-
 trainCallerEquip={}
 trainStopEntity={}
 trainEntity={}

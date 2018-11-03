@@ -1,5 +1,3 @@
-eventsControl={}
-
 roboportEntity={}
 eventsControl["roboport"]=roboportEntity
 

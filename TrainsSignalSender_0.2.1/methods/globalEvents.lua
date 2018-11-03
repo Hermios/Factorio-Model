@@ -1,5 +1,3 @@
-eventsControl={}
-
 trainStopEntity={}
 eventsControl["train-stop"]=trainStopEntity
 
