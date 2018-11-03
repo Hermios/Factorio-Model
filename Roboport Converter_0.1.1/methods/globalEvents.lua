@@ -16,7 +16,7 @@ OnTick=function()
 end
 
 roboportEntity.OnBuilt=function(entity)
-	listRoboport[roboport.unit_number]=RoboportPrototype:new(entity)
+	listRoboport[entity.unit_number]=RoboportPrototype:new(entity)
 end
 
 roboportEntity.OnRemoved=function(entity)
