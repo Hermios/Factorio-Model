@@ -1,3 +1,4 @@
+listCustomEvents={}
 eventsControl={}
 require "libs.dataLibs"
 require "libs.guiLibs"
@@ -20,6 +21,7 @@ script.on_event(defines.events.on_tick, function(event)
 		if InitCommands then InitCommands() end
 		if InitRemote then InitRemote() end
 		if InitData then InitData() end
+		if InitCustomEvents then InitCustomEvents() end
 		initialized=true
 	end
 	if technologyName and not player.force.technologies[technologyName].researched then			
@@ -203,11 +205,13 @@ script.on_event(defines.events.on_research_finished, function(event)
 end)
 
 -- On Custom key fired
-script.on_event(listCustomEvents or {},function(event)
-	if technologyName and not player.force.technologies[technologyName].researched then			
-		return		
+function InitCustomEvents()
+	for eventName,calledFunction in pairs(listCustomEvents) do
+		script.on_event(eventName,function(event)
+			if technologyName and not player.force.technologies[technologyName].researched then			
+				return		
+			end
+			if calledFunction then calledFunction(event) end
+		end)
 	end
-	if (listCustomEvents or {})[event.name] then
-		listCustomEvents[event.name](event)
-	end
-end)
+end

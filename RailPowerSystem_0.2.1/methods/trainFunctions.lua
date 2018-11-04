@@ -5,7 +5,6 @@ function TrainPrototype:new(entity,data)
 	if entity.valid==false then
 		return nil
 	end
-	remote.call("DebugMethods","printTableContent",data)
 	local o = data or
 	{
 		entity=entity

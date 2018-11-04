@@ -1,11 +1,12 @@
 Connector={}
 StraightRail={}
 CurvedRail={}
-
+trainEntity={}
 eventsControl["rail-signal"]=Connector
 eventsControl["electric-pole"]=Connector
 eventsControl["straight-rail"]=StraightRail
 eventsControl["curved-rail"]=CurvedRail
+eventsControl["locomotive"]=trainEntity
 
 function OnTick()
 	for _,data in pairs(listTrains) do
@@ -60,4 +61,8 @@ OnTrainCreated=function(event)
 	listTrains[event.train.id]=TrainPrototype:new(event.train)
 	if event.old_train_id_1 then listTrains[event.old_train_id_1]=nil end
 	if event.old_train_id_2 then listTrains[event.old_train_id_2]=nil end
+end
+
+trainEntity.OnRemoved=function(entity)
+	listTrains[entity.train.id]=nil
 end

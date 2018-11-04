@@ -1,6 +1,7 @@
 trainStopEntity={}
+trainEntity={}
 eventsControl["train-stop"]=trainStopEntity
-
+eventsControl["locomotive"]=trainEntity
 --Research
 OnResearchFinished=function()
 	for _,trainStop in pairs(game.surfaces[1].find_entities_filtered{type="train-stop"}) do
@@ -20,7 +21,7 @@ function OnTrainStateChanged(event)
 		listTrains[train.id]=TrainPrototype:new(train)
 	end
 	if listTrains[train.id].station and not train.station then
-		listTrainsStop[listTrains[train.id].station.unit_number]:setParameters()
+		if listTrains[train.id].station.valid then listTrainsStop[listTrains[train.id].station.unit_number]:setParameters() end
 		listTrains[train.id].station=nil
 	elseif train.station and not listTrains[train.id].station then
 		listTrains[train.id].station=train.station
@@ -28,7 +29,9 @@ function OnTrainStateChanged(event)
 		for index,data in pairs(listTrains[train.id].signals) do
 			table.insert(signals,{signal=data.signal,count=1,index=index})
 		end
-		listTrainsStop[listTrains[train.id].station.unit_number]:setParameters(signals)
+		if listTrainsStop[train.station.unit_number] then
+			listTrainsStop[train.station.unit_number]:setParameters(signals)
+		end
 	end
 end
 
@@ -54,6 +57,10 @@ OnTrainCreated=function(event)
 		end
 		listTrains[event.old_train_id_2]=nil 
 	end
+end
+
+trainEntity.OnRemoved=function(entity)
+	listTrains[entity.train.id]=nil
 end
 
 trainStopEntity.OnBuilt=function(entity)

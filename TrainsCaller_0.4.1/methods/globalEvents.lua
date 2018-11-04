@@ -44,6 +44,9 @@ OnTrainCreated=function(event)
 	end
 end
 
+trainEntity.OnRemoved=function(entity)
+	listTrains[entity.train.id]=nil
+end
 --Equipment
 trainCallerEquip.OnEquipmentPlaced=function(event)
 	local train=player.opened.train
