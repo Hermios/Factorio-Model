@@ -5,7 +5,7 @@ function TrainStopPrototype:new(entity,data)
 		return
 	end
 	local pos1=entity.position
-	local pos2=rail.position
+	local pos2=entity.position
 	if entity.direction==0 then
 		pos1.x=pos1.x+2
 		pos2.x=pos1.x-5
@@ -24,16 +24,20 @@ function TrainStopPrototype:new(entity,data)
 end
 
 function TrainStopPrototype:findTrain(attemptId)
+	local direction=self.entity.direction-(4*(attemptId-1))
+	if direction<0 then
+		direction=self.entity.direction+(4*(attemptId-1))
+	end
 	local trainStation=game.surfaces[1].create_entity
 	{
 		name=trainStopGhost,
 		force=player.force,
 		position=self.positions[attemptId],
-		direction=self.entity.direction+4
+		direction=direction
 	}
 	if not trainStation then return false end
 	for _,trainData in pairs(listTrains) do
-		if trainData:isFree()==true and trainData:addStation(trainStation) then
+		if trainData:isFree()==true and trainData:addStation(trainStation,self.entity.unit_number) then
 			self.station=trainStation
 			player.print({"train_ok",math.floor(distance(trainData.entity.locomotives.front_movers[1],trainStation))})
 			return true

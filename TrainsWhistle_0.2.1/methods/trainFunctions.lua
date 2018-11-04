@@ -36,8 +36,11 @@ function TrainPrototype:addStation(station,targetId)
 	schedule.current=#schedule.records
 	self.entity.schedule=schedule
 	self.targetId=targetId
-	if not self.entity.has_path() then
-		self:releaseTrain(station)
+	local previousMode=self.entity.manual_mode
+	self.entity.manual_mode=false
+	--if no path
+	if self.entity.has_path==false then
+		self:releaseTrain(station,previousMode)
 		return false
 	else
 		return true
@@ -47,7 +50,6 @@ end
 function TrainPrototype:isFree()
 -- if a station is defined, the train is already called
 	if self.targetId then return false end
-	
 	--Check if there is a driver
 	for _,loco in pairs(self.entity.locomotives.front_movers) do
 		if loco.get_driver() then
@@ -56,17 +58,18 @@ function TrainPrototype:isFree()
 	end
 	for _,loco in pairs(self.entity.locomotives.back_movers) do
 		if loco.get_driver() then
-			return true
+			return false
 		end
 	end
+	return true
 end
 
-function TrainPrototype:releaseTrain(station)
+function TrainPrototype:releaseTrain(station,previousMode)
 	local stationName=(station or listTrainStops[self.targetId].station or {}).backer_name
 	if not stationName then return end
 	local schedule=self.entity.schedule or {current=1,records={}}
 	for index,record in pairs(schedule.records) do
-		if record.station==self.station.backer_name then
+		if record.station==stationName then
 			table.remove(schedule.records,index)
 		end
 	end
@@ -75,5 +78,5 @@ function TrainPrototype:releaseTrain(station)
 	end
 	self.entity.schedule=schedule
 	self.targetId=nil
-	self.entity.manual_mode=true
+	self.entity.manual_mode=previousMode or true
 end

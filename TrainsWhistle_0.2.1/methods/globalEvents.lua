@@ -1,26 +1,26 @@
-listCustomEvents={}
-
 trainWhistleEquip={}
+trainEntity={}
 eventsControl[trainWhistleEquipment]=trainWhistleEquip
-
+eventsControl["locomotive"]=trainEntity
 OnTrainStateChanged=function(event)
 	if (listTrains[event.train.id] or {}).targetId then
+		local targetId=listTrains[event.train.id].targetId
 		if event.train.state==defines.train_state.path_lost then
 			player.print({"PATH_LOST"})
-			local targetId=listTrains[event.train.id].targetId
 			listTrains[event.train.id]:releaseTrain()
 			local trainStopProto=listTrainStops[targetId]
+			local index=1
 			while index<=#trainStopProto.positions and trainStopProto:findTrain(index) do
 				index=index+1
 			end
+			if index>#trainStopProto.positions then
+				player.print({"NO_TRAIN"})
+				listTrainStops[targetId]=nil
+			end
+		elseif event.train.state==defines.train_state.wait_station and listTrainStops[listTrains[event.train.id].targetId].station==event.train.station then
+			listTrains[event.train.id]:releaseTrain()
+			listTrainStops[targetId]:remove()
 		end
-		if index>#trainStopProto.positions then
-			player.print({"NO_TRAIN"})
-			listTrainStops[targetId]=nil
-		end
-	elseif event.train.state==defines.train_state.wait_station and listTrainStops[listTrains[event.train.id].targetId].station==event.train.station then
-		listTrainStops[listTrains[event.train.id].targetId]:remove()
-		listTrains[event.train.id]:releaseTrain()
 	end
 end
 
@@ -29,12 +29,10 @@ OnTrainCreated=function(event)
 	if newPrototype:hasEquipment(trainWhistleEquipment) then
 		listTrains[newPrototype.entity.id]=newPrototype
 	end
-	if event.old_train_id_1 and listTrains[event.old_train_id_1] and listTrains[event.old_train_id_1]:hasEquipment(trainWhistleEquipment)==false
-	then
+	if event.old_train_id_1 and listTrains[event.old_train_id_1] and listTrains[event.old_train_id_1]:hasEquipment(trainWhistleEquipment)==false then
 		listTrains[event.old_train_id_1]=nil
 	end
-	if event.old_train_id_2 and listTrains[event.old_train_id_2] and listTrains[event.old_train_id_2]:hasEquipment(trainWhistleEquipment)==false
-	then
+	if event.old_train_id_2 and listTrains[event.old_train_id_2] and listTrains[event.old_train_id_2]:hasEquipment(trainWhistleEquipment)==false then
 		listTrains[event.old_train_id_2]=nil
 	end
 end
@@ -44,7 +42,7 @@ OnTrainWhistled=function()
 	if entity.type=="straight-rail" then
 		local trainStopProto=TrainStopPrototype:new(entity)
 		local index=1
-		while index<=#trainStopProto.positions and trainStopProto:findTrain(index) do
+			while index<=#trainStopProto.positions and not trainStopProto:findTrain(index) do
 			index=index+1
 		end
 		if index>#trainStopProto.positions then
@@ -53,6 +51,10 @@ OnTrainWhistled=function()
 			listTrainStops[entity.unit_number]=trainStopProto
 		end
 	end
+end
+
+function trainEntity.OnRemoved(entity)
+	listTrains[entity.train.id]=nil
 end
 
 trainWhistleEquip.OnEquipmentPlaced=function(event)
