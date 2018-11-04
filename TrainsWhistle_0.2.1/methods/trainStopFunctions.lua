@@ -48,6 +48,6 @@ function TrainStopPrototype:findTrain(attemptId)
 end
 
 function TrainStopPrototype:remove()
-	listTrainStops[self.station.unit_number]=nil
+	listTrainStops[self.entity.unit_number]=nil
 	self.station.destroy()
 end

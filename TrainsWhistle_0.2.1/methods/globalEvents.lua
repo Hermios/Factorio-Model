@@ -9,6 +9,7 @@ OnTrainStateChanged=function(event)
 			player.print({"PATH_LOST"})
 			listTrains[event.train.id]:releaseTrain()
 			local trainStopProto=listTrainStops[targetId]
+			trainStopProto.station.destroy()
 			local index=1
 			while index<=#trainStopProto.positions and trainStopProto:findTrain(index) do
 				index=index+1
