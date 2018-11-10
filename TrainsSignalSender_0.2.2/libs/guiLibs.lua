@@ -8,7 +8,7 @@ function InitGuiLibs()
 	CenterGui=player.gui.center
 end
 
-function OnClick(guiElement)
+function OnAction(guiElement)
 	--build guiElementPath
 	local path=guiElement.name
 	local currentGuiElement=guiElement
@@ -17,8 +17,8 @@ function OnClick(guiElement)
 		path=currentGuiElement.name..">"..path
 	end
 	--call updateEntity
-	if MappingGuiObject[path] and MappingGuiObject[path].luaGuiObject.onClick then
-		MappingGuiObject[path].luaGuiObject.onClick(MappingGuiObject[path])
+	if MappingGuiObject[path] and MappingGuiObject[path].luaGuiObject.onAction then
+		MappingGuiObject[path].luaGuiObject.onAction(MappingGuiObject[path])
 	end
 end
 
@@ -48,7 +48,7 @@ function LuaGuiObject:new(gui,path,newName)
 		children={},
 	}
 	gui.content=nil
-	gui.onClick=nil
+	gui.onAction=nil
 	gui.childGuiObject=nil
 	gui.default_type=nil
 	o.gui=clone(gui)
@@ -89,7 +89,9 @@ function LuaGuiObject:updateGuiElement(data)
 		self.gui.text=data[self.content]
 	elseif self.gui.type=="choose-elem-button" then	
 		self.gui[self.gui.elem_type]=data[self.content]
-		self.gui[self.gui.elem_type].type=self.gui[self.gui.elem_type].type or self.default_type
+		if elem_type=="signal" then
+			self.gui["signal"].type=self.gui["signal"].type or self.default_type
+		end
 	elseif self.gui.type=="drop-down" then
 		local i=0
 		while (i<#(self.gui.items) and self.gui.selected_index==0) do if self.gui.items[i]==data[self.content] then self.gui.selected_index=i end i=i+1 end		
@@ -109,7 +111,9 @@ function LuaGuiObject:updateData(guiElement,data)
 		data[self.content]=guiElement.text
 	elseif guiElement.type=="choose-elem-button" then	
 		data[self.content]=guiElement.elem_value
-		data[self.content]=data[self.content] or {type=self.default_type}
+		if elem_type=="signal" then
+			data[self.content]=data[self.content] or {type=self.default_type}
+		end
 	elseif guiElement.type=="drop-down" then
 		data[self.content]=guiElement.items[guiElement.selected_index]
 	end

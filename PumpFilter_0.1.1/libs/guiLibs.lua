@@ -42,7 +42,7 @@ function LuaGuiObject:new(gui,path,newName)
 	{
 		content=gui.content,
 		path=(path or "")..guiName,
-		onClick=gui.onClick,
+		onAction=gui.onAction,
 		childGuiObject=gui.childGuiObject,
 		default_type=gui.default_type,
 		children={},

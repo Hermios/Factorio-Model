@@ -39,7 +39,9 @@ script.on_event(defines.events.on_robot_built_entity, function(event)
 		return		
 	end
 	if eventsControl[event.created_entity.type] and eventsControl[event.created_entity.type].OnBuilt then
-		eventsControl[event.created_entity.type].OnBuilt(event.created_entity )
+		eventsControl[event.created_entity.type].OnBuilt(event.created_entity)
+	elseif eventsControl["any"] and eventsControl["any"].OnBuilt then
+		eventsControl["any"].OnBuilt(event.created_entity)
 	end	
 end)
 
@@ -49,6 +51,8 @@ script.on_event(defines.events.on_built_entity, function(event)
 	end
 	if eventsControl[event.created_entity.type] and eventsControl[event.created_entity.type].OnBuilt then
 		eventsControl[event.created_entity.type].OnBuilt(event.created_entity)
+	elseif eventsControl["any"] and eventsControl["any"].OnBuilt then
+		eventsControl["any"].OnBuilt(event.created_entity)
 	end	
 end)
 
@@ -59,6 +63,8 @@ script.on_event(defines.events.on_robot_pre_mined, function(event)
 	end
 	if eventsControl[event.entity.type] and eventsControl[event.entity.type].OnRemoved then
 		eventsControl[event.entity.type].OnRemoved(event.entity)
+	elseif eventsControl["any"] and eventsControl["any"].OnRemoved then
+		eventsControl["any"].OnRemoved(event.entity)
 	end	
 end)
 
@@ -68,6 +74,8 @@ script.on_event(defines.events.on_pre_player_mined_item, function(event)
 	end
 	if eventsControl[event.entity.type] and eventsControl[event.entity.type].OnRemoved then
 		eventsControl[event.entity.type].OnRemoved(event.entity)
+	elseif eventsControl["any"] and eventsControl["any"].OnRemoved then
+		eventsControl["any"].OnRemoved(event.entity)
 	end	
 end)
 
@@ -144,7 +152,7 @@ script.on_event(defines.events.on_gui_click, function(event)
 		or not GuiEntities then			
 		return		
 	end
-	if OnClick then OnClick(event.element) end
+	if OnAction then OnAction(event.element) end
 end)
 
 -- On gui text changed
@@ -152,6 +160,7 @@ script.on_event(defines.events.on_gui_text_changed, function(event)
 	if technologyName and not player.force.technologies[technologyName].researched then			
 		return		
 	end
+	if OnAction then OnAction(event.element) end
 	if UpdateData then UpdateData(event.element) end
 end)
 
@@ -161,6 +170,7 @@ script.on_event(defines.events.on_gui_checked_state_changed, function(event)
 		or not GuiEntities then			
 		return		
 	end
+	if OnAction then OnAction(event.element) end
 	if UpdateData then UpdateData(event.element) end
 end)
 
@@ -170,6 +180,7 @@ script.on_event(defines.events.on_gui_selection_state_changed, function(event)
 		or not GuiEntities then			
 		return		
 	end
+	if OnAction then OnAction(event.element) end
 	if UpdateData then UpdateData(event.element) end
 end)
 
@@ -179,6 +190,7 @@ script.on_event(defines.events.on_gui_elem_changed, function(event)
 		or not GuiEntities then			
 		return		
 	end
+	if OnAction then OnAction(event.element) end
 	if UpdateData then UpdateData(event.element) end
 end)
 
