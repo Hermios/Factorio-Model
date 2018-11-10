@@ -1,21 +1,11 @@
 pumpEntity={}
 eventsControl["pump"]=pumpEntity
 
---local functions
-local function setPreviousPipe(entity)
-	for _,neighbour in pairs(entity.neighbours) do
-		local pump=listPumps[neighbour.unit_number]
-		if pump and not pump.previousPipe then
-			pump:setPreviousPipe()
-		end
-	end
+--Pump
+pumpEntity.OnBuilt=function(entity)
+	listPumps[entity.unit_number]=PumpPrototype:new(entity)
 end
 
-local function removePreviousPipe(entity)
-	for _,neighbour in pairs(entity.neighbours) do
-		local pump=listPumps[neighbour.unit_number]
-		if pump and pump.previousPipe.unit_number==entity.unit_number then
-			pump.previousPipe=nil
-		end
-	end
+pumpEntity.OnRemoved=function(entity)
+	listPumps[entity.unit_number]=nil
 end
