@@ -35,7 +35,11 @@ end
 function RoboportPrototype:setSignals()
 	local signals={}
 	local logisticCell=self.entity.logistic_cell
-	local availableContents=logisticCell.logistic_network.get_contents()
+	local logistic_network=logisticCell.logistic_network
+	if not logistic_network then
+	return
+	end
+	local availableContents=logistic_network.get_contents()
 	local area={{self.entity.position.x-logisticCell.construction_radius,self.entity.position.y-logisticCell.construction_radius},{self.entity.position.x+logisticCell.construction_radius,self.entity.position.y+logisticCell.construction_radius}}
 	local ghostsRequired={}
 	for _,ghostItem in pairs(game.surfaces[1].find_entities_filtered{area=area,name="entity-ghost"}) do
