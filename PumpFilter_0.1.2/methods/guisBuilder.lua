@@ -10,9 +10,7 @@ function InitGuiBuild()
 end
 
 function UpdateFilter(content)
-player.print(content.guiElement.elem_value)
 	if content.guiElement.elem_value then
 		local successFilter=player.opened.fluidbox.set_filter(1,{name=content.guiElement.elem_value,force=true})
-		player.print(successFilter)
 	end
 end
