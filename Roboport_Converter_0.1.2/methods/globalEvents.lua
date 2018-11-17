@@ -18,5 +18,7 @@ roboportEntity.OnBuilt=function(entity)
 end
 
 roboportEntity.OnRemoved=function(entity)
-	listRoboport[entity.unit_number]:removeRoboport()
+	if listRoboport[entity.unit_number] then
+		listRoboport[entity.unit_number]:removeRoboport()
+	end
 end
