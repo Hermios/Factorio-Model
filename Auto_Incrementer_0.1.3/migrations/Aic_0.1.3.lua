@@ -1,4 +1,3 @@
-require "methods.constants"
 for _, force in pairs(game.forces) do
     force.reset_recipes()
     force.reset_technologies()
@@ -6,6 +5,6 @@ for _, force in pairs(game.forces) do
     local techs = force.technologies
     local recipes = force.recipes
     if techs["circuit-network"].researched then
-        recipes[AutoIncrementCombinatorRecipe].enabled = true
+        recipes["Auto Increment Combinator Recipe"].enabled = true
     end
 end
