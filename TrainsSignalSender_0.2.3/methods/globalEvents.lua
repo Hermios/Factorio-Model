@@ -6,14 +6,19 @@ eventsControl["locomotive"]=trainEntity
 --On tick
 OnTick=function()
 	for id,trainData in pairs(global.listTrainsAtStop) do 
-		local signals={}		
-		for index,data in pairs(trainData.signals) do
-			if data.signal.name then
-				table.insert(signals,{signal=data.signal,count=trainData:getCalculatedCountForSignal(data),index=index})
+		if trainData.entity and trainData.entity.valid and trainData.entity.station and trainData.entity.station.valid then
+			local signals={}		
+			for index,data in pairs(trainData.signals) do
+				if data.signal.name then
+					table.insert(signals,{signal=data.signal,count=trainData:getCalculatedCountForSignal(data),index=index})
+				end
 			end
-		end
-		if listTrainsStop[trainData.entity.station.unit_number] then
-			listTrainsStop[trainData.entity.station.unit_number]:setParameters(signals)
+			if listTrainsStop[trainData.entity.station.unit_number] then
+				listTrainsStop[trainData.entity.station.unit_number]:setParameters(signals)
+			end
+		elseif not trainData.entity or not trainData.entity.valid then
+			listTrains[id]=nil
+			global.listTrainsAtStop[id]=nil
 		end
 	end
 end
@@ -54,24 +59,26 @@ OnTrainCreated=function(event)
 	end
 
 --if at least one previous train
-	local firstOldTrain=event.old_train_id_1 or event.old_train_id_2
+	local firstOldTrain=event.old_train_id_1
 	GuiEntities["locomotive"]:closeGui()
-	if event.old_train_id_2 then
-		listTrains[event.train.id]=TrainPrototype:new(event.train,listTrains[firstOldTrain])
-		listTrains[firstOldTrain]=nil
-	end
-	
+	listTrains[event.train.id]=TrainPrototype:new(event.train,listTrains[firstOldTrain])
+	listTrains[firstOldTrain]=nil
+	global.listTrainsAtStop[firstOldTrain]=nil
 -- if both previous trains, add a second
 	if event.old_train_id_1 and event.old_train_id_2 and listTrains[event.old_train_id_2] then
 		for i,d in pairs(listTrains[event.old_train_id_2].signals) do
 				table.insert(listTrains[event.train.id].signals,{signal=d.signal,count=d.count,index=#listTrains[event.train.id].signals})
 		end
 		listTrains[event.old_train_id_2]=nil 
-	end
+		global.listTrainsAtStop[event.old_train_id_2]=nil
+	end	
 end
 
 trainEntity.OnRemoved=function(entity)
-	listTrains[entity.train.id]=nil
+	if (#entity.train.locomotives.front_movers + #entity.train.locomotives.back_movers)==1 then
+		listTrains[entity.train.id]=nil
+		global.listTrainsAtStop[entity.train.id]=nil
+	end
 end
 
 trainStopEntity.OnBuilt=function(entity)
