@@ -1,0 +1,6 @@
+require "methods.constants"
+require "__HermiosLibs__.data"
+require "prototypes.items"
+require "prototypes.recipes"
+require "prototypes.techs"
+require "prototypes.entities"

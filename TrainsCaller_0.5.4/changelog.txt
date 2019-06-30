@@ -1,0 +1,91 @@
+---------------------------------------------------------------------------------------------------
+0.5.4
+Fix:
+	- Issue with 0.17.35 for remnant corpses
+	- Hitbox value wouldn't be maintained
+---------------------------------------------------------------------------------------------------
+0.5.3
+Fix:
+	- Add dependency to vehicle grid
+---------------------------------------------------------------------------------------------------
+0.5.2
+Improvements:
+	- Create changelog file
+Changes:
+	- Require HermiosTrainLibs
+Update:
+	- Equipement can only be placed in a locomotive. modded locomotive are handled
+---------------------------------------------------------------------------------------------------
+0.5.1
+Improvements:
+	- Add thumbnail
+
+---------------------------------------------------------------------------------------------------
+0.5.0
+Update:
+	- Compatible with 0.17
+Migration:
+	- Work with 0.16 data
+Improvements:
+	- Decrease check to improve UPS latency
+
+---------------------------------------------------------------------------------------------------
+0.4.3
+Fixes:
+	- bugs with german languages (Thanks Tokito99)
+
+---------------------------------------------------------------------------------------------------
+0.4.2
+Fixes:
+	- Critical bugs (Conflicts with other mods)
+
+---------------------------------------------------------------------------------------------------
+0.4.1
+Changes:
+	- The gui is limited to one option: "Allow multiple calls".
+		To call trains, trainstations need first to be connected to signals (Each train station has a special selection box, red,where lines shall be connected). No ghost implementation anymore (This can be solved by combinating this mod and a new one, Roboport Converter)
+		When a train is called, the train station is added to its list, at the end of the queue and follow the standard way of queue management.
+		In case of "allow multiple calls", if more than one tran station calls the train, they are added to the list. If not, there is a hidden queue anyway, but the train will come back to its default train stations before going to the new one (Thus, no train station is ever ignored, but their priority is lower).
+		Choose of train is managed, depending on how many items they already have in queue, and if they allow multiple calls
+		Possible combinatio with the mod TrainSignalSender (last version!). A train can be called because its contain the require item, fluid, or because its registered with the required signal.
+
+---------------------------------------------------------------------------------------------------
+0.3.3
+	Bugs:
+		-various bugs fixed, more stable version
+
+---------------------------------------------------------------------------------------------------
+0.3.1
+Improvements:
+	- When a path is not found, this is now display as for normal train scheduled.
+
+---------------------------------------------------------------------------------------------------
+0.3.0
+Update:
+	- Compatible with 0.15 (Starting from 0.15.10)
+Changes:
+	- Call conditions are made on the train station. You can add as much condition as you want for the circuit
+		If the required conditions are followed, the train station will required one element. 
+		If any train around who has been activated for the train call has the requested element, it will answer the call.
+		Same concept for network, but only one condition : Ghosts!
+	- When the train arrives is at the calling station (and only then), the station doesn't read train content anymore. If you have the TrainSignalSender mod activated (Not mandatory, but highly recommanded), the train will automatically send its signals to the station. Once the train doesn't follow the condition of the station anymore, this one returns to its previous status (Content of train read or not), and the train comes back to its default station (Or stay where he is, if no default station was defined)
+
+---------------------------------------------------------------------------------------------------
+0.2.1
+Improvements:
+	- The mod is now compatible with bob logistics
+Changes:
+	- Vehicle grid is not required anymore. However, a grid is still mandatory (vehicle grid or bob logistics)
+
+---------------------------------------------------------------------------------------------------
+0.2.0 
+Improvements:
+	- The train can be called from network when objects are required (i.e. ghosts items on the floor) near a station.
+		To make it work:
+		- Activate the option "Activate call train" on the train station
+		- Activate the option "Activate call train from network" from the train
+		- Connect the train station to any item that works with the network
+		Put at least one construction robot in the roboport of this network.
+		If a ghost is present on the network area, and the train has the required item, it will move the station, and stay there until no item is required.
+Required : 
+	- Vehicle Equipment

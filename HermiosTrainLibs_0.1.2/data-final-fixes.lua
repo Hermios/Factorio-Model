@@ -1,0 +1,1 @@
+addEquipmentCategory("locomotive","locomotive-category")

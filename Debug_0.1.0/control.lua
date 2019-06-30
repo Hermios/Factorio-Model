@@ -1,2 +1,0 @@
-require "Remotes"
-require "Commands"

@@ -1,0 +1,10 @@
+{
+  "name": "RailPowerSystem",
+  "version": "0.3.4",
+  "title": "RailPowerSystem",
+  "author": "Hermios",
+  "homepage": "https://forums.factorio.com/viewtopic.php?f=95&t=51096",
+  "dependencies": ["base>=0.17.44","?FARL>=2.0.1","HermiosLibs>=0.1.2"],
+  "description": "Connect rails to electric and signals circuits, and use electric trains",
+  "factorio_version": "0.17"
+}
