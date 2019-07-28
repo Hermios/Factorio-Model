@@ -1,0 +1,10 @@
+{
+  "name": "TrainsCaller",
+  "version": "0.5.5",
+  "title": "TrainsCaller",
+  "author": "Hermios",
+  "homepage": "https://forums.factorio.com/viewtopic.php?f=95&t=51096",
+  "dependencies": ["base>=0.17.44","VehicleGrid>=1.1.1","HermiosTrainLibs>=0.1.2","?TrainsSignalSender>=0.3.5"],
+  "description": "Allows trainstations to call trains when conditions are fulfilled",
+  "factorio_version": "0.17"
+}
