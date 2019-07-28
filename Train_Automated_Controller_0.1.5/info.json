@@ -1,0 +1,10 @@
+{
+  "name": "Train_Automated_Controller",
+  "version": "0.1.5",
+  "title": "Train Automated Controller",
+  "author": "Hermios",
+  "homepage": "https://forums.factorio.com/viewtopic.php?f=95&t=51096",
+  "dependencies": ["base>=0.17.44","HermiosLibs>=0.1.2"],
+  "description": "The TAC lets you control trains behaviours, based on incoming signals",
+  "factorio_version": "0.17"
+}

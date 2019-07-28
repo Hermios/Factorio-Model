@@ -1,0 +1,28 @@
+---------------------------------------------------------------------------------------------------
+0.1.5
+Fix:
+	- No proper update when situation changed
+	- wrong parameters loaded
+---------------------------------------------------------------------------------------------------
+0.1.4
+Fix:
+	- Issue with 0.17.35 for remnant corpses
+---------------------------------------------------------------------------------------------------
+0.1.3
+Improvements:
+	- Create changelog file
+Changes:
+	- Require HermiosLibs
+---------------------------------------------------------------------------------------------------
+0.1.2
+Bugs:
+	- Fix that TAC is not properly removed
+
+---------------------------------------------------------------------------------------------------
+0.1.1
+Improvements:
+	- Add new options for actions (Add/Remove station, clean planning, set manual mode, connect trains, go to station)
+Bugs:
+	- fix various
+Mods: 
+	- Add an option for parameters: OnInit can call an operation that will be executed before updating data. I use it to load dynamic data (like train stations) in a drop down list
