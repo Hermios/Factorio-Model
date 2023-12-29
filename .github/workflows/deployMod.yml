@@ -38,7 +38,7 @@ jobs:
         run: |
           for file in "$ALL_CHANGED_FILES"; do
             root=$(echo "$file" | cut -d "/" -f2)
-            if !([[ ${array[@]} =~ "\<$root\>" ]]); then
+            if !([[ -z "${file}" ]]) && !([[ ${array[@]} =~ "\<$root\>" ]]); then
               LIST_MOD_CHANGES+=($root)
               echo test:"$root"
             fi
