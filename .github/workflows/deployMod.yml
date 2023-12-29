@@ -9,7 +9,7 @@ on:
         description: 'version level (0:Major, 1:minor, 2:bugfix) - default 2'
         required: false
         type: string
-        default: 2
+        default: "2"
       changelog:
         description: "Changelog"
         required: true
