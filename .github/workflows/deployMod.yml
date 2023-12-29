@@ -8,7 +8,7 @@ on:
       version_level:
         description: 'version level (0:Major, 1:minor, 2:bugfix) - default 2'
         required: false
-        type: number
+        type: string
         default: 2
       changelog:
         description: "Changelog"
@@ -31,13 +31,24 @@ jobs:
     runs-on: ubuntu-latest
 
     # Steps represent a sequence of tasks that will be executed as part of the job
-    steps:
+    steps:  
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
-      
+      - name: list mods changed
+        env:
+          ALL_CHANGED_FILES: ${{ steps.changed-files.outputs.all_changed_files }}
+          LIST_MOD_CHANGES: ()
+        run: |
+          for file in "$ALL_CHANGED_FILES"; do
+            root=$(echo "$file" | cut -d "/" -f2)
+            if !([[ ${array[@]} =~ "\<$root\>" ]]); then
+              LIST_MOD_CHANGES+=($root)
+            done
       - name: Update info.json
-        run: run updateInfoJson.sh ${{ inputs.perform_deploy }} ${{ inputs.version_level }}
-
+        run: |
+          for file in "$LIST_MOD_CHANGES"; do
+            sh updateInfoJson.sh $file ${{ inputs.version_level }}
+          done
       - name: Update changelog
         run: |
           echo Add other actions to build,
