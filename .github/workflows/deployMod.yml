@@ -46,7 +46,7 @@ jobs:
       - name: Update info.json
         run: |
           for file in "$LIST_MOD_CHANGES"; do
-            sh .github/workflows/updateInfoJson.sh $file ${{ inputs.version_level }}
+            sh ${GITHUB_WORKSPACE}/.github/workflows/updateInfoJson.sh $file ${{ inputs.version_level }}
           done
       - name: Update changelog
         run: |
