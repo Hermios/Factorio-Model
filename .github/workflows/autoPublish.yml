@@ -12,7 +12,11 @@ jobs:
     if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     steps:
-    - run: |
+    - name: get labels
+      env:
+        ALL_LABELS: ${{ toJSON(github.event.pull_request.labels) }}
+      run: |
+        echo $ALL_LABELS
         for i in  ${{ github.event.pull_request.labels }}
         do
           echo $i
