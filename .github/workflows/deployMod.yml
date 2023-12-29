@@ -48,7 +48,7 @@ jobs:
       - name: Update info.json
         run: |
           for file in "$LIST_MOD_CHANGES"; do
-            sh updateInfoJson.sh $file ${{ inputs.version_level }}
+            sh ./updateInfoJson.sh $file ${{ inputs.version_level }}
           done
       - name: Update changelog
         run: |
