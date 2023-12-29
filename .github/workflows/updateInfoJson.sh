@@ -1,7 +1,7 @@
 jsonFile="$1/info.json"
 jsonString=`cat $jsonFile`
 currentVersion=$(jq -r '.version' <<< "$jsonString")
-versionLevel=expr $2 + 0
+versionLevel=$(($2 + 0))
 IFS='.' read -ra VersionData <<< "$currentVersion"
 VersionData[$versionLevel]=expr ${VersionData[$versionLevel]}+1
 for i in (versionLevel+1..2)
