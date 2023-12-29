@@ -4,8 +4,8 @@ on:
   pull_request:
     types:
       - closed
-    #branches:
-     # - 'master/**'
+    branches:
+      - 'master'
 
 jobs:
   if_merged:
@@ -14,7 +14,7 @@ jobs:
     steps:
     - name: Get origin branch
       env:
-        SOURCE: github.event.pull_request.github.head_ref	
+        SOURCE: ${{ github.event.pull_request.github.head_ref }}	
       run: |
         echo $SOURCE
 
