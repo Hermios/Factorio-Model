@@ -15,7 +15,7 @@ jobs:
     - name: get data
       env:
         SOURCE_BRANCH: ${{ github.head_ref}}	
-        PULL_REQUEST_DESCRIPTION: ${{ github.event.comment.body }}
+        PULL_REQUEST_DESCRIPTION: ${{ github.event.pull_request.comments[0].body }}
       run: echo "$PULL_REQUEST_DESCRIPTION" and "$SOURCE_BRANCH"
   # build:
   #   runs-on: ubuntu-latest
