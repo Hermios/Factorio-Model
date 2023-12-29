@@ -14,7 +14,7 @@ jobs:
     steps:
     - id: version-level
       env:
-        ALL_LABELS: ${{ toJSON(github.event.pull_request.labels.*.name) }}
+        ALL_LABELS: ${{ github.event.pull_request.labels.*.name }}
          
       run: |
         for i in  $ALL_LABELS
