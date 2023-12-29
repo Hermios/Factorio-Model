@@ -14,9 +14,12 @@ jobs:
     steps:
     - name: Get origin branch
       env:
-        SOURCE: ${{ github.head_ref || github.base_ref || github.ref || github.ref_name}}	
+        SOURCE1: ${{ github.head_ref}}	
+        SOURCE2: ${{ github.base_ref}}
+        SOURCE3: ${{ github.ref}}
+        SOURCE4: ${{ github.ref_name}}  
       run: |
-        echo $SOURCE
+        echo $SOURCE1
 
   # build:
   #   runs-on: ubuntu-latest
