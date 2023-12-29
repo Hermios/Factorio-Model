@@ -12,18 +12,11 @@ jobs:
     if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     steps:
-    - if: contains(github.event.pull_request.labels.*.name, 'bug')
-      env: 
-        VERSION_LEVEL: 2
-      run: echo
-    - if: contains(github.event.pull_request.labels.*.name, 'minor')
-      env: 
-        VERSION_LEVEL: 1
-      run: echo
-    - if: contains(github.event.pull_request.labels.*.name, 'major')
-      env: 
-        VERSION_LEVEL: 0
-      run: echo
+    - run: |
+        for i in  ${{ github.event.pull_request.labels }}
+        do
+          echo $i
+        done
     - name: get data
       env:
         SOURCE_BRANCH: ${{ github.head_ref}}	
