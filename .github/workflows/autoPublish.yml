@@ -12,14 +12,11 @@ jobs:
     if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     steps:
-    - name: Get origin branch
+    - name: Get data
       env:
-        SOURCE1: ${{ github.head_ref}}	
-        SOURCE2: ${{ github.base_ref}}
-        SOURCE3: ${{ github.ref}}
-        SOURCE4: ${{ github.ref_name}}  
-      run: |
-        echo $SOURCE1
+        SOURCE_BRANCH: ${{ github.head_ref}}	
+        PULL_REQUEST_DESCRIPTION: ${{ github.event.pull_request.comments}}
+      run: echo $PULL_REQUEST_DESCRIPTION
 
   # build:
   #   runs-on: ubuntu-latest
