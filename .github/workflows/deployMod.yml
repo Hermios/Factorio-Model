@@ -41,7 +41,6 @@ jobs:
             root=$(echo "$file" | cut -d "/" -f2)
             if !([[ -z "${file}" ]]) && !([[ ${array[@]} =~ "\<$root\>" ]]); then
               LIST_MOD_CHANGES+=($root)
-              echo test:"$root"
             fi
           done
       - name: Update info.json
