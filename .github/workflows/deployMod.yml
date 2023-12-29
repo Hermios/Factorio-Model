@@ -35,7 +35,6 @@ jobs:
       - name: list mods changed
         env:
           ALL_CHANGED_FILES: ${{ steps.changed-files.outputs.all_changed_files }}
-          LIST_MOD_CHANGES: ()
         run: |
           for file in "$ALL_CHANGED_FILES"; do
             root=$(echo "$file" | cut -d "/" -f2)
