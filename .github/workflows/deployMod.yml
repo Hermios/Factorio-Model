@@ -43,7 +43,8 @@ jobs:
             root=$(echo "$file" | cut -d "/" -f2)
             if !([[ ${array[@]} =~ "\<$root\>" ]]); then
               LIST_MOD_CHANGES+=($root)
-            done
+            fi
+          done
       - name: Update info.json
         run: |
           for file in "$LIST_MOD_CHANGES"; do
