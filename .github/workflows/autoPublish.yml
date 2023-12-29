@@ -14,10 +14,10 @@ jobs:
     steps:
     - name: get labels
       env:
-        ALL_LABELS: ${{ toJSON(github.event.pull_request.labels) }}
+        ALL_LABELS: ${{ toJSON(github.event.pull_request.labels.*.name) }}
       run: |
         echo $ALL_LABELS
-        for i in  ${{ github.event.pull_request.labels }}
+        for i in  ${{ github.event.pull_request.labels.*.name }}
         do
           echo $i
         done
