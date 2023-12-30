@@ -12,31 +12,16 @@ jobs:
     if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     steps:
-    - id: version-level
-      env:
-        ALL_LABELS: ${{ github.event.pull_request.labels.*.name }}
-         
-      run: |
-        for i in  $ALL_LABELS
-        do
-          echo $i
-          if [ "$i"=="bug" ]
-          then
-            VERSION_LEVEL=2
-          elif [ "$i"=="minor" ]
-          then
-            VERSION_LEVEL=1  
-          elif [ "$i"=="major" ]
-          then
-              VERSION_LEVEL=0  
-          fi
-        done
+    - id: factorio-last-version
+      uses: ActionsTools/read-json-action@main
+      with:
+        file_path: "https://lua-api.factorio.com/latest/runtime-api.json"
+    - run: echo ${{ steps.factorio-last-version.outputs.application_version }}
     - name: get data
       env:
         SOURCE_BRANCH: ${{ github.head_ref}}	
         PULL_REQUEST_DESCRIPTION: ${{ github.event.pull_request.body }}
-        VERSION_LEVEL: ${{ steps.version-level.outputs.VERSION_LEVEL }}
-      run: echo $VERSION_LEVEL
+      run: 
   # build:
   #   runs-on: ubuntu-latest
   #   steps:
