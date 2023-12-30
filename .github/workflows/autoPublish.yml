@@ -22,7 +22,10 @@ jobs:
       env:
         SOURCE_BRANCH: ${{ github.head_ref}}	
         PULL_REQUEST_DESCRIPTION: ${{ github.event.pull_request.body }}
-      run: echo ${{ steps.factorio-last-version.outputs.application_version }}
+        PULL_REQUEST_DATA: ${{ toJson(github.event.pull_request) }}
+      run: |
+        echo ${{ steps.factorio-last-version.outputs.application_version }}
+        echo $PULL_REQUEST_DATA
   # build:
   #   runs-on: ubuntu-latest
   #   steps:
