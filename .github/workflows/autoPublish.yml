@@ -8,26 +8,25 @@ on:
       - 'master'
 
 jobs:
-  if_merged:
-    if: github.event.pull_request.merged == true
+  setup:
     runs-on: ubuntu-latest
+    #outputs:
+    #  matrix: ${{ steps.matrix.outputs.value }}
     steps:
-    - name: download factorio api json
-      run: curl -X GET https://lua-api.factorio.com/latest/runtime-api.json > runtime-api.json
-    - id: factorio-last-version
-      uses: ActionsTools/read-json-action@main
-      with:
-        file_path: "./runtime-api.json"
-    - uses: nearform-actions/github-action-check-linked-issues@v1
-      id: check-linked-issues
-    - name: get data
-      env:
-        SOURCE_BRANCH: ${{ github.head_ref}}	
-        PULL_REQUEST_DESCRIPTION: ${{ github.event.pull_request.body }}
-      run: |
-        echo ${{ steps.factorio-last-version.outputs.application_version }}
-        echo ${{ steps.check-linked-issues.outputs.issues }}
-  # build:
+      - uses: nearform-actions/github-action-check-linked-issues@v1
+        id: get-linked-issues
+      - name: download list issues as json
+        run: 
+          for issue in ${{ steps.get-linked-issues.outputs.issues }}
+          do
+            echo $issue
+            number="$issue" | grep -E .+#(\d+)
+            echo $number
+            curl -X GET https://api.github.com/repos/Hermios/Factorio/issues/"$number" > issue#"$number".json
+          done
+          
+    
+  ## build:
   #   runs-on: ubuntu-latest
   #   steps:
   #   - name: Checkout repository and submodules
