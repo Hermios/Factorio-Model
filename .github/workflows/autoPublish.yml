@@ -19,7 +19,7 @@ jobs:
         #env:
         #  LIST_ISSUES: ${{ steps.get-linked-issues.outputs.issues }}
         run: |
-          echo ${{ toJson(env) }}
+          echo ${{ toJson(github) }}
           
     
   ## build:
