@@ -13,11 +13,11 @@ jobs:
     #outputs:
     #  matrix: ${{ steps.matrix.outputs.value }}
     steps:
-      - uses: nearform-actions/github-action-check-linked-issues@v1
-        id: get-linked-issues
+      #- uses: nearform-actions/github-action-check-linked-issues@v1
+      #  id: get-linked-issues
       - name: download list issues as json
-        env:
-          LIST_ISSUES: ${{ steps.get-linked-issues.outputs.issues }}
+        #env:
+        #  LIST_ISSUES: ${{ steps.get-linked-issues.outputs.issues }}
         run: |
           echo ${{ toJson(env) }}
           
