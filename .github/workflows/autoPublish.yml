@@ -16,14 +16,10 @@ jobs:
       - uses: nearform-actions/github-action-check-linked-issues@v1
         id: get-linked-issues
       - name: download list issues as json
-        run: 
-          for issue in ${{ steps.get-linked-issues.outputs.issues }}
-          do
-            echo $issue
-            number="$issue" | grep -E .+#(\d+)
-            echo $number
-            curl -X GET https://api.github.com/repos/Hermios/Factorio/issues/"$number" > issue#"$number".json
-          done
+        env:
+          LIST_ISSUES: ${{ steps.get-linked-issues.outputs.issues }}
+        run: |
+          echo ${{ toJson(env) }}
           
     
   ## build:
