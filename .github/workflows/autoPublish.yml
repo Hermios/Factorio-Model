@@ -16,10 +16,11 @@ jobs:
       #- uses: nearform-actions/github-action-check-linked-issues@v1
       #  id: get-linked-issues
       - name: download list issues as json
-        #env:
+        env:
         #  LIST_ISSUES: ${{ steps.get-linked-issues.outputs.issues }}
+          LIST_GITHUB: ${{ toJson(github) }}
         run: |
-          echo ${{ toJson(github) }}
+          echo $LIST_GITHUB
           
     
   ## build:
