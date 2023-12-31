@@ -1,0 +1,10 @@
+{
+  "name": "{modName}",
+  "version": "0.0.0",
+  "title": "{title}",
+  "author": "Hermios",
+  "homepage": "https//github.com",
+  "dependencies": ["base>={FactorioVersion}"],
+  "description": "{Description}",
+  "factorio_version": "{FactorioVersion}"
+}

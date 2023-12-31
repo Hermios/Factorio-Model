@@ -1,1 +1,0 @@
-addEquipmentCategory("locomotive","locomotive-category")
