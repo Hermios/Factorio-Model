@@ -1,7 +1,0 @@
-ModName="Train_Automated_Controller"
-technologyName="Train Automated Controller"
-InputTAC="InputTAC"
-OutputTAC="OutputTAC"
-TACTech="TAC Tech"
-TACRecipe="TAC Recipe"
-TACPrototype="TAC Prototype"

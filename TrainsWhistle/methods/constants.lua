@@ -1,5 +1,0 @@
-ModName="TrainsWhistle"
-trainWhistleEquipment="trainWhistleEquipment"
-technologyName="trainWhistleTech"
-onTrainWhistled="on_train_whistled"
-trainStopGhost="trainStopGhost"
