@@ -1,9 +1,7 @@
 ---
 name: Bug report
 about: Create a report to help us improve
-title: "[BUG]"
 labels: bug
-assignees: ZwerOxotnik
 
 ---
 
@@ -25,4 +23,3 @@ Please drop the `factorio-current.log` file or `factorio-previous.log` here
 
 
 **Additional Information**
-Add any other context about the problem here?
