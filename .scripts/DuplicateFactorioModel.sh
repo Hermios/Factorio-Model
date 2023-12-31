@@ -7,7 +7,7 @@ gh repo create $modName -d "Factorio Mod: $description" --template https://githu
 labels=$(gh label list -R Hermios/$modName --json name)
 jq -c '.[]' <<< $labels | while read i
 do 
-  label=$(jq '.name '<<< $i)
+  label=$(jq '.name '<<< $i | tr -d '"')
   gh label delete --yes $label -R Hermios/$modName
 done
 gh label clone Hermios/Factorio-Model -R Hermios/$modName
