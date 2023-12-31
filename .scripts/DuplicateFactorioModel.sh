@@ -21,3 +21,6 @@ gh label clone Hermios/Factorio-Model -R Hermios/$modName
 
 #Clone secrets
 gh secret set -f AppData/Roaming/GitHub\ CLI/.env -R Hermios/Test
+
+#Update info.json 
+curl https://raw.githubusercontent.com/Hermios/Factorio-Model/developer/info.json --output info.json
