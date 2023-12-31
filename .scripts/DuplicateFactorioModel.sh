@@ -1,6 +1,6 @@
 #!/bin/bash
 read -p "Name of the mod? " modName
-read -p "Description? "description
+read -p "Description? " description
 gh repo create $modName -d "Factorio Mod: $description" --template https://github.com/Hermios/Factorio-Model.git --include-all-branches --public
 
 #Delete all existing labels
