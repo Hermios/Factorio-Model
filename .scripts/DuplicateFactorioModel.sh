@@ -7,7 +7,7 @@ read -p "Description? " description
 modName="${titleName// /_}"
 
 #Create repo
-newRep=gh repo create $modName -d "Factorio Mod: $description" --template https://github.com/Hermios/Factorio-Model.git --include-all-branches --public
+newRep=$(gh repo create $modName -d "Factorio Mod: $description" --template https://github.com/Hermios/Factorio-Model.git --include-all-branches --public)
 
 
 #Delete all existing labels
@@ -22,4 +22,4 @@ done
 gh label clone Hermios/Factorio-Model -R $newRep
 
 #Clone secrets
-gh secret set -f AppData/Roaming/GitHub\ CLI/.env -R $newRep
+gh secret set -f "$APPDATA\GitHub CLI\.env" -R $newRep
