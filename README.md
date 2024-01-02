@@ -16,5 +16,17 @@
 4. Validate
 **__NOTE:__**: This will create a repository with 2 branches, **Master** and **Developer**. Master shall never be modified directly (It is locked anyway).
 Other branches can be created, using Developer as basis.
- 
+
+⚠️This part is not ready yet
+## Publish a new release of a mod
+1. Implement code
+2. update info.json **only with dependancies other than the base**
+3. Push the changes to the corresponding branch
+4. Create a pull request to the master
+5. Add issues with labels (mandatory to fulfill the changelog)
+6. Merge
+---
+**__NOTE:__** Version is updated based on quantity of issues and version of Factorio. Info.json and changelog.txt are updated automatically.
+Then a release is created, and zip file is sent automatically to Factorio mods
+--- 
 
