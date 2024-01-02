@@ -1,5 +1,5 @@
 # How to use the Factorio Model
-**__NOTE:__** This works only for Windows
+⚠️ This works only for Windows
 ## First time
 1. Install Python (version 3 minimum) and pip
 2. Install <a href=https://cli.github.com/>Github cli</a>
@@ -14,7 +14,7 @@
 <em>**Note:**</em> characters /,\,' and space are automatically replaced in the mod/repository name with a _. However, the title remain
 3. Fill the description
 4. Validate
-**__NOTE:__**: This will create a repository with 2 branches, **Master** and **Developer**. Master shall never be modified directly (It is locked anyway).
+ℹ️ This will create a repository with 2 branches, **Master** and **Developer**. Master shall never be modified directly (It is locked anyway).
 Other branches can be created, using Developer as basis.
 
 ⚠️This part is not ready yet
@@ -25,8 +25,5 @@ Other branches can be created, using Developer as basis.
 4. Create a pull request to the master
 5. Add issues with labels (mandatory to fulfill the changelog)
 6. Merge
----
-**__NOTE:__** Version is updated based on quantity of issues and version of Factorio. Info.json and changelog.txt are updated automatically.
+ℹ️ Version is updated based on quantity of issues and version of Factorio. Info.json and changelog.txt are updated automatically.
 Then a release is created, and zip file is sent automatically to Factorio mods
---- 
-
