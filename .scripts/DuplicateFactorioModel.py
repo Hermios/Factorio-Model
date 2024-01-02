@@ -48,7 +48,7 @@ with open(f"{os.getenv('APPDATA')}\\factorio\\player-data.json") as read_content
 [label.delete() for label in new_repo.get_labels()] 
 
 #Clone labels from model
-[lambda label:new_repo.addLabel(label.name,label.color,label.description) for label in template_repo.get_labels()]
+[new_repo.create_label(label.name,label.color,label.description) for label in template_repo.get_labels()]
 
 #Set secrets
 new_repo.create_secret("FACTORIO_MOD_API_KEY",os.getenv("FACTORIO_MOD_API_KEY"))
