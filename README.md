@@ -17,8 +17,7 @@
 ℹ️ This will create a repository with 2 branches, **Master** and **Developer**. Master shall never be modified directly (It is locked anyway).
 Other branches can be created, using Developer as basis.
 
-⚠️This part is not ready yet
-## Publish a new release of a mod
+## Publish a new release of a mod ⚠️This part is not ready yet
 1. Implement code
 2. update info.json **only with dependancies other than the base**
 3. Push the changes to the corresponding branch
