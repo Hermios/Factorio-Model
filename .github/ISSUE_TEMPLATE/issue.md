@@ -1,9 +1,10 @@
 ---
-name: Bug report
+name: Bug/Feature report
 about: Create a report to help us improve
-labels: bug
 
 ---
+
+Add one label (only!). Title and label will appear in the changelog
 
 Please drop the `factorio-current.log` file or `factorio-previous.log` here
 
