@@ -31,7 +31,6 @@ post_parameters = {
     "description": description,
     "include_all_branches":True
 }
-        
 
 github.get_user()._requester.requestJsonAndCheck(
     "POST",
