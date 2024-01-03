@@ -63,28 +63,33 @@ try:
 except:
     repo.create_file("info.json","Create info.json",json.dumps(info_json,indent=1))
 ################################# Set changelog ###############################
-changelog=f"""---------------------------------------------------------------------------------------------------
-Version: {release_version}
-Date: {datetime.now().strftime('%d-%m-%Y')}
-"""
-
+# last release message
 last_release_text=""
 for issue in issues:
     last_release_text+=f"  {issue}\n"
     for detail in issues[issue]:
         last_release_text+=f"    - {detail}\n"
 last_release_text+="\n"
-changelog+=last_release_text
+
+# changelog
+changelog=f"""---------------------------------------------------------------------------------------------------
+Version: {release_version}
+Date: {datetime.now().strftime('%d-%m-%Y')}
+{last_release_text}
+"""
+
 for release in repo.get_releases():
     changelog+=f"""---------------------------------------------------------------------------------------------------
 Version: {release.tag_name}
 Date: {release.created_at.strftime('%d-%m-%Y')}
 {release.body}
 """
+# update changelog
 try:
     sha=repo.get_contents("changelog.txt").sha
     repo.update_file("changelog.txt","Create changelog.txt",changelog,sha=sha)
 except:
     repo.create_file("changelog.txt","Create changelog.txt",changelog)
 
+# create release
 repo.create_git_release(tag=release_version,name="", message=last_release_text)
