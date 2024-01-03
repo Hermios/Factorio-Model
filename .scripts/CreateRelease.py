@@ -5,14 +5,17 @@ from urllib.request import urlopen,Request
 from datetime import datetime
 
 ################################# Load data ###############################
+# Get env data
 pull_request=json.loads(os.environ["PULL_REQUEST"])
 github=Github(os.environ["OAUTH_TOKEN"])
+
+# Get Repository
 repo=github.get_user().get_repo(pull_request["base"]["repo"]["name"])
 try:
     repo_release=repo.get_latest_release()
 except:
     repo_release="0.0.0"
-repo_release_data=list(map(lambda v:int(v),repo_release.split(".")))
+repo_release_data=list(map(lambda v:int(v),repo_release.tag_name.split(".")))
 
 req=Request("https://factorio.com/api/latest-releases",headers={'User-Agent' : "Magic Browser"})
 with urlopen(req)  as response:
@@ -20,7 +23,6 @@ with urlopen(req)  as response:
 
 # Get issues for current pull_request
 issues=dict()
-print(os.environ["LIST_ISSUES"])
 for issueNumber in list(map(lambda issue: int(issue.split("#")[1]),json.loads(os.environ["LIST_ISSUES"]))):
     issue=repo.get_issue(issueNumber)
     issues.setdefault(issue.labels[0].name,[])
@@ -55,20 +57,34 @@ info_json={
   "description": repo.get_variable("MOD_DESCRIPTION").value,
   "factorio_version": factorio_release[:factorio_release.rfind('.')]
 }
-
+try:
+    sha=repo.get_contents("info.json").sha
+    repo.update_file("info.json","Create info.json",json.dumps(info_json,indent=1),sha=sha)
+except:
+    repo.create_file("info.json","Create info.json",json.dumps(info_json,indent=1))
 ################################# Set changelog ###############################
 changelog=f"""---------------------------------------------------------------------------------------------------
 Version: {release_version}
-Date: {datetime.fromisoformat(pull_request["closed_at"]).strftime('%d-%m-%Y')}
+Date: {datetime.now().strftime('%d-%m-%Y')}
 """
-for issue in issues:
-    changelog+=f"  {issue}\n"
-    for detail in issues[issue]:
-        changelog+=f"    - {detail}\n"
 
+last_release_text=""
+for issue in issues:
+    last_release_text+=f"  {issue}\n"
+    for detail in issues[issue]:
+        last_release_text+=f"    - {detail}\n"
+
+changelog+=last_release_text
 for release in repo.get_releases():
     changelog+=f"""---------------------------------------------------------------------------------------------------
-Version: {release.tag}
-Date: {datetime.fromisoformat(release.created_at).strftime('%d-%m-%Y')}
-{release.comment}
+Version: {release.tag_name}
+Date: {release.created_at.strftime('%d-%m-%Y')}
+{release.body}
 """
+try:
+    sha=repo.get_contents("changelog.txt").sha
+    repo.update_file("changelog.txt","Create changelog.txt",changelog,sha=sha)
+except:
+    repo.create_file("changelog.txt","Create changelog.txt",changelog)
+
+repo.create_git_release(tag=release_version,name="", message=last_release_text)
