@@ -19,7 +19,7 @@ jobs:
       - name: Run Create Release
         env:
           PULL_REQUEST: ${{ toJson(github.event.pull_request) }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          OAUTH_TOKEN: ${{ secrets.OAUTH_TOKEN }}
         run: python .scripts/CreateRelease.py
           
     

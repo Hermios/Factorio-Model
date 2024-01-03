@@ -5,8 +5,8 @@ from urllib.request import urlopen
 from datetime import datetime
 
 ################################# Load data ###############################
-pull_request=json.loads(os.env("PULL_REQUEST"))
-github=Github(os.env("GITHUB_TOKEN"))
+pull_request=json.loads(os.environ["PULL_REQUEST"])
+github=Github(os.environ["OAUTH_TOKEN"])
 repo=github.get_user().get_repo(pull_request.repo.name)
 repo_release_data=list(map(lambda v:int(v),(repo.get_latest_release() or "1.0.0").split(".")))
 
