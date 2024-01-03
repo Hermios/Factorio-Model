@@ -5,7 +5,7 @@ on:
     types:
       - closed
     branches:
-      - 'published'
+      - 'master'
 
 jobs:
   if_merged:

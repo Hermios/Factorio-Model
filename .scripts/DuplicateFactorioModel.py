@@ -42,7 +42,7 @@ github.get_user()._requester.requestJsonAndCheck(
 new_repo=github.get_user().get_repo(mod_name)
 
 #Delete readme
-new_repo.delete_file("README.md")
+new_repo.delete_file("README.md","delete README.md",new_repo.get_readme().sha)
 
 #Delete all existing labels
 [label.delete() for label in new_repo.get_labels()] 
