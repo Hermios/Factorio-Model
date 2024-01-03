@@ -13,8 +13,9 @@
 2. Fill the name of the mod  
 <em>**Note:**</em> characters /,\\,' and space are automatically replaced in the mod/repository name with a _. However, the title remain
 3. Fill the description
-4. Validate  
-ℹ️ This will create a repository with 2 branches, **Master** and **Developer**. Master shall never be modified directly (It is locked anyway).
+4. Fill the name of the branch to add (Optional)
+5. Validate  
+ℹ️ This will create a repository with a brancheMaster. this one shall never be modified directly.
 Other branches can be created, using Developer as basis.
 
 ## Publish a new release of a mod ⚠️This part is not ready yet
