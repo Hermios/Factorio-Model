@@ -49,6 +49,7 @@ new_repo=github.get_user().get_repo(mod_name)
 
 #Set secrets
 new_repo.create_secret("FACTORIO_MOD_API_KEY",os.getenv("FACTORIO_MOD_API_KEY"))
+new_repo.create_secret("OAUTH_TOKEN",token)
 
 #Set variables
 new_repo.create_variable("MOD_TITLE",title)
