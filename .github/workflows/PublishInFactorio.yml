@@ -13,18 +13,21 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Set up Python 3.8
+      - name: Set up Python 3.11
         uses: actions/setup-python@v2
         with:
-          python-version: 3.8
+          python-version: 3.11
       - name: Install Python dependencies
         uses: py-actions/py-dependency-install@v4
         with:
           path: ".scripts/requirements.txt"
+      - uses: nearform-actions/github-action-check-linked-issues@v1
+        id: get-linked-issues
       - name: Run Create Release
         env:
           PULL_REQUEST: ${{ toJson(github.event.pull_request) }}
           OAUTH_TOKEN: ${{ secrets.OAUTH_TOKEN }}
+          LIST_ISSUES: ${{ steps.get-linked-issues.outputs.issues }}
         run: python .scripts/CreateRelease.py
           
     
