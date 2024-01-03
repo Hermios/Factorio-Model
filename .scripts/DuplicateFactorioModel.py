@@ -41,8 +41,6 @@ github.get_user()._requester.requestJsonAndCheck(
 new_repo=github.get_user().get_repo(mod_name)
 
 #Get Factorio owner
-with open(f"{os.getenv('APPDATA')}\\factorio\\player-data.json") as read_content:
-  factorio_owner=json.load(read_content)["service-username"]
 
 #Delete all existing labels
 [label.delete() for label in new_repo.get_labels()] 
@@ -53,13 +51,9 @@ with open(f"{os.getenv('APPDATA')}\\factorio\\player-data.json") as read_content
 #Set secrets
 new_repo.create_secret("FACTORIO_MOD_API_KEY",os.getenv("FACTORIO_MOD_API_KEY"))
 
-#Send info.json to the repo
-info_json={
-  "name": mod_name,
-  "title": title,
-  "author": factorio_owner,
-  "homepage": new_repo.url,
-  "description": description
-}
-    
-new_repo.create_file("info.json","Init",json.dumps(info_json,indent=2),"developer")
+#Set variables
+new_repo.create_variable("MOD_TITLE",title)
+new_repo.create_variable("MOD_DESCRIPTION",description)
+with open(f"{os.getenv('APPDATA')}\\factorio\\player-data.json") as read_content:
+  new_repo.create_variable("MOD_AUTHOR",json.load(read_content)["service-username"])
+new_repo.create_variable("MOD_DEPENDANCIES"," ")

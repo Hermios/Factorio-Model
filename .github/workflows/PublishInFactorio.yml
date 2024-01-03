@@ -10,21 +10,16 @@ on:
 jobs:
   setup:
     runs-on: ubuntu-latest
-    #outputs:
-    #  matrix: ${{ steps.matrix.outputs.value }}
     steps:
       - name: Install Python dependencies
         uses: py-actions/py-dependency-install@v4
         with:
-          path: "path/to/requirements.txt"
-      #- uses: nearform-actions/github-action-check-linked-issues@v1
-      #  id: get-linked-issues
-      - name: download list issues as json
+          path: ".scripts/requirements.txt"
+      - name: Run Create Release
         env:
-        #  LIST_ISSUES: ${{ steps.get-linked-issues.outputs.issues }}
-          LIST_GITHUB: ${{ toJson(github) }}
-        run: |
-          echo $LIST_GITHUB
+          PULL_REQUEST: ${{ toJson(github.event.pull_request) }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python .scripts/CreateRelease.py
           
     
   ## build:
