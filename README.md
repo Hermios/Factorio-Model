@@ -11,9 +11,9 @@
 ## Create a new mod
 1. Run the python file python .scripts/DuplicateFactorioModel.py
 2. Fill the name of the mod  
-<em>**Note:**</em> characters /,\,' and space are automatically replaced in the mod/repository name with a _. However, the title remain
+<em>**Note:**</em> characters /,\\,' and space are automatically replaced in the mod/repository name with a _. However, the title remain
 3. Fill the description
-4. Validate
+4. Validate  
 ℹ️ This will create a repository with 2 branches, **Master** and **Developer**. Master shall never be modified directly (It is locked anyway).
 Other branches can be created, using Developer as basis.
 
@@ -23,6 +23,6 @@ Other branches can be created, using Developer as basis.
 3. Push the changes to the corresponding branch
 4. Create a pull request to the master
 5. Add issues with labels (mandatory to fulfill the changelog)
-6. Merge
+6. Merge  
 ℹ️ Version is updated based on quantity of issues and version of Factorio. Info.json and changelog.txt are updated automatically.
 Then a release is created, and zip file is sent automatically to Factorio mods
