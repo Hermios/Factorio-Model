@@ -58,6 +58,6 @@ with open(f"{os.getenv('APPDATA')}\\factorio\\player-data.json") as read_content
 new_repo.create_variable("MOD_DEPENDANCIES"," ")
 
 # Clone branch
-if branch!="":
-  branch = repo.get_branch("published")
+if new_branch!="":
+  branch = new_repo.get_branch("published")
   new_repo.create_git_ref(ref=f'refs/heads/{new_branch}', sha=branch.commit.sha)
