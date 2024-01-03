@@ -41,6 +41,9 @@ github.get_user()._requester.requestJsonAndCheck(
 )
 new_repo=github.get_user().get_repo(mod_name)
 
+#Delete readme
+new_repo.delete_file("README.md")
+
 #Delete all existing labels
 [label.delete() for label in new_repo.get_labels()] 
 
@@ -57,8 +60,7 @@ new_repo.create_variable("MOD_DESCRIPTION",description)
 with open(f"{os.getenv('APPDATA')}\\factorio\\player-data.json") as read_content:
   new_repo.create_variable("MOD_AUTHOR",json.load(read_content)["service-username"])
 new_repo.create_variable("MOD_DEPENDANCIES"," ")
-
 # Clone branch
 if new_branch!="":
-  branch = new_repo.get_branch("published")
+  branch = new_repo.get_branch("master")
   new_repo.create_git_ref(ref=f'refs/heads/{new_branch}', sha=branch.commit.sha)
