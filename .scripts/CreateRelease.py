@@ -73,7 +73,7 @@ for issue in issues:
     last_release_text+=f"  {issue}\n"
     for detail in issues[issue]:
         last_release_text+=f"    - {detail}\n"
-
+last_release_text+="\n"
 changelog+=last_release_text
 for release in repo.get_releases():
     changelog+=f"""---------------------------------------------------------------------------------------------------
