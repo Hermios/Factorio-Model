@@ -11,7 +11,7 @@
 ## Create a new mod
 1. Run the python file python .scripts/DuplicateFactorioModel.py
 2. Fill the name of the mod  
-<em>**Note:**</em> characters /,\,' and space are automatically replaced in the mod/repository name with a _. However, the title remain
+<em>**Note:**</em> characters /,\\,' and space are automatically replaced in the mod/repository name with a _. However, the title remain
 3. Fill the description
 4. Validate  
 ℹ️ This will create a repository with 2 branches, **Master** and **Developer**. Master shall never be modified directly (It is locked anyway).
