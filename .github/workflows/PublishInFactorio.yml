@@ -13,6 +13,10 @@ jobs:
     #outputs:
     #  matrix: ${{ steps.matrix.outputs.value }}
     steps:
+      - name: Install Python dependencies
+        uses: py-actions/py-dependency-install@v4
+        with:
+          path: "path/to/requirements.txt"
       #- uses: nearform-actions/github-action-check-linked-issues@v1
       #  id: get-linked-issues
       - name: download list issues as json
