@@ -7,11 +7,12 @@ from datetime import datetime
 ################################# Load data ###############################
 pull_request=json.loads(os.environ["PULL_REQUEST"])
 github=Github(os.environ["OAUTH_TOKEN"])
-repo=github.get_user().get_repo(pull_request.repo.name)
+repo=github.get_user().get_repo(pull_request["base"]["repo"]["name"])
 repo_release_data=list(map(lambda v:int(v),(repo.get_latest_release() or "1.0.0").split(".")))
 
-with urlopen("https://factorio.com/api/latest-releases")  as response:
-  factorio_release = json.loads(response.read()).experimental.alpha
+req=Request("https://factorio.com/api/latest-releases",headers={'User-Agent' : "Magic Browser"})
+with urlopen(req)  as response:
+  factorio_release = json.loads(response.read())["experimental"]["alpha"]
 
 # Get issues for current pull_request
 issues=dict()
