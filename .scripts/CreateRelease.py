@@ -15,15 +15,14 @@ repo=github.get_user().get_repo(pull_request["base"]["repo"]["name"])
 
 ################################# Get release data ###############################
 try:
-    repo_release=repo.get_latest_release()
+    repo_release=repo.get_latest_release().tag_name
 except:
     repo_release="0.0.0"
-repo_release_data=list(map(lambda v:int(v),repo_release.tag_name.split(".")))
+repo_release_data=list(map(lambda v:int(v),repo_release.split(".")))
 
 req=Request("https://factorio.com/api/latest-releases",headers={'User-Agent' : "Magic Browser"})
 with urlopen(req)  as response:
   factorio_release = json.loads(response.read())["experimental"]["alpha"]
-os.environ['FACTORIO_RELEASE']=factorio_release
 
 # Get issues for current pull_request
 issues=dict()
@@ -43,7 +42,6 @@ elif sum(len(v) for v in issues.values())>=5:
 else:
     repo_release_data[2]+=1
 release_version=".".join(list(map(lambda v:str(v),repo_release_data)))
-os.environ['RELEASE_VERSION']=release_version
 ################################# Create release ###############################
 # last release message
 last_release_text=""
@@ -54,4 +52,10 @@ for issue in issues:
 last_release_text+="\n"
 
 # create release
-repo.create_git_release(tag=release_version,name="", message=last_release_text)
+repo.create_git_release(tag=release_version,name=pull_request["title"], message=last_release_text)
+
+# Store datga in env
+env_file_name = os.getenv('GITHUB_ENV')
+with open(env_file_name, "a") as env_file:
+    env_file.write(f"RELEASE_VERSION={release_version}\n")
+    env_file.write(f"FACTORIO_RELEASE={factorio_release}\n")

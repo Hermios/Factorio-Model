@@ -1,8 +1,10 @@
 import os
 import json
 from github import Github
-from pathlib import Path
-import requests, zipfile, io
+from glob import glob
+import requests, io
+from zipfile import ZipFile
+import shutil
 
 ################################# Load data ###############################
 # Get env data
@@ -11,26 +13,27 @@ github=Github(os.environ["OAUTH_TOKEN"])
 # Get Repository
 repo=github.get_user().get_repo(pull_request["base"]["repo"]["name"])
 
+previous_zip_file_name=f"{repo.name}-{os.environ['RELEASE_VERSION']}"
 zip_file_name=f"{repo.name}_{os.environ['RELEASE_VERSION']}"
 
 ################################# Extract zip file and remove non factorio content ###############################
-with requests.get(repo.get_archive_link("zipball"), headers={"Authorization": f"token {token}"}) as r:
-    z=zipfile.ZipFile(io.BytesIO(r.content))
-    z.extractall(f"{zip_file_name}/")
-    os.remove(z.filename)
+with requests.get(f"https://github.com/{repo.full_name}/archive/refs/tags/{os.environ['RELEASE_VERSION']}.zip", headers={"Authorization": f"token {os.environ['OAUTH_TOKEN']}"}) as r:
+    with open('release.zip', 'wb') as fh:
+        fh.write(r.content)
+with ZipFile('release.zip') as z:
+    z.extractall()
+os.remove('release.zip')
+os.rename(previous_zip_file_name,zip_file_name)
 
 # remove all non factorio directories
-for p in Path(zip_file_name).glob("\..+"):
-    p.unlink()
-for p in Path(zip_file_name).glob(".+\.md"):
-    p.unlink()
+[shutil.rmtree(d) for d in glob(f"./{zip_file_name}/.*")]
 
 ################################# Set info.json ###############################
 try:
     mod_dependancies=json.loads(repo.get_variable("MOD_DEPENDANCIES").value)
 except:
     mod_dependancies=[]
-mod_dependancies.insert(0,f"base>={factorio_release}")
+mod_dependancies.insert(0,f"base>={os.environ['FACTORIO_RELEASE']}")
 
 info_json={
   "name": repo.name,
@@ -40,7 +43,7 @@ info_json={
   "homepage": repo.url,
   "dependencies": mod_dependancies,
   "description": repo.get_variable("MOD_DESCRIPTION").value,
-  "factorio_version": os.environ['FACTORIO_RELEASE'][:factorio_release.rfind('.')]
+  "factorio_version": os.environ['FACTORIO_RELEASE'][:os.environ['FACTORIO_RELEASE'].rfind('.')]
 }
 
 # create info.json file
@@ -48,18 +51,20 @@ with open(f'{zip_file_name}/info.json','w') as info:
     info.write(json.dumps(info_json,indent=2))
 
 ################################# Set changelog ###############################
+changelog=""
 for release in repo.get_releases():
     changelog+=f"""---------------------------------------------------------------------------------------------------
 Version: {release.tag_name}
 Date: {release.created_at.strftime('%d-%m-%Y')}
-{release.body}
-"""
+{release.body}"""
+
 # create changelog file
 with open(f'{zip_file_name}/changelog.txt','w') as info:
     info.write(changelog)
 
 ################################# create new zip file ###############################
-directory = pathlib.Path(f"{zip_file_name}/")
-with ZipFile(zip_file_name, "w") as archive:
-    for file_path in directory.rglob("*"):
-        archive.write(file_path, arcname=file_path.relative_to(directory))
+with ZipFile(f"{zip_file_name}.zip", "w") as zf:
+    for dirname, subdirs, files in os.walk(zip_file_name):
+        zf.write(dirname)
+        for filename in files:
+            zf.write(os.path.join(dirname, filename))

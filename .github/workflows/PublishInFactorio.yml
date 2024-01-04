@@ -8,25 +8,17 @@ on:
       - 'master'
 
 jobs:
-  load_requirements:
+  Update_To_Factorio:
     if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - name: Set up Python 3.11
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v3
         with:
           python-version: 3.11
-      - name: Install Python dependencies
-        uses: py-actions/py-dependency-install@v4
-        with:
-          path: ".scripts/requirements.txt"
-   
-  create_release:
-    needs: load_requirements
-    if: github.event.pull_request.merged == true
-    runs-on: ubuntu-latest
-    steps:
+          cache: 'pip'
+      - run: pip install -r ".scripts/requirements.txt"
       - uses: nearform-actions/github-action-check-linked-issues@v1
         id: get-linked-issues
       - name: Run Create Release
@@ -35,12 +27,6 @@ jobs:
           OAUTH_TOKEN: ${{ secrets.OAUTH_TOKEN }}
           LIST_ISSUES: ${{ steps.get-linked-issues.outputs.issues }}
         run: python .scripts/CreateRelease.py
-     
-  update_zip:
-    needs: create_release
-    if: github.event.pull_request.merged == true
-    runs-on: ubuntu-latest
-    steps:
       - name: update zip for Factorio
         env:
           PULL_REQUEST: ${{ toJson(github.event.pull_request) }}
