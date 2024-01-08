@@ -16,6 +16,7 @@
 4. Fill the name of the branch to add (Optional)
 5. Validate  
 ℹ️ This will create a repository with a branche Master. this one shall never be modified directly.
+A RREADME.md file is created, but empty
 The info.json file is as well created, but only for development. It is useless to fulfill it properly, as it will be overwritten during the publish process
 Other branches can be created, using Master as basis.
 
@@ -28,4 +29,6 @@ Other branches can be created, using Master as basis.
 6. Add issues with labels **(mandatory)**  
 ℹ️ Issues are used to create changelog. The label of the issue is the type of change, while its title is the description of the change + the url of the issue
 8. Merge  
-ℹ️ This will create a new release for the repo, which description is the changelog content. Then, the content as zip is downloaded, changelog and info.json file are automatically generated, included into the zip <embed>which is then sent to Factorio (⚠️not ready yet)</embed>
+ℹ️ This will create a new release for the repo, which description is the changelog content. Then, the content as zip is downloaded, changelog and info.json file are automatically generated, included into the zip
+Readme.md content is added as detailed description of the mod 
+<embed>which is then sent to Factorio (⚠️not ready yet)</embed>
