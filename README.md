@@ -16,6 +16,7 @@
 4. Fill the name of the branch to add (Optional)
 5. Validate  
 ℹ️ This will create a repository with a branche Master. this one shall never be modified directly.
+The info.json file is as well created, but only for development. It is useless to fulfill it properly, as it will be overwritten during the publish process
 Other branches can be created, using Master as basis.
 
 ## Publish a new release of a mod
