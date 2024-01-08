@@ -15,10 +15,11 @@
 3. Fill the description
 4. Fill the name of the branch to add (Optional)
 5. Validate
+6. In Info.json, update the factorio_version if necessary (Default:1.0)
 ___
 ℹ️ This will create a repository with a branche Master. this one shall never be modified directly.
 A RREADME.md file is created, but empty. When publishing, its content is added as detailed description of the mod 
-The info.json file is as well created, but only for development. It is useless to fulfill it properly, as it will be overwritten during the publish process
+The info.json file is as well created, but only for development. **Other than <em>factorio_version</em>**,it is useless to fulfill it properly, as it will be overwritten during the publish process
 Other branches can be created, using Master as basis.
 ___
 ## Publish a new release of a mod
