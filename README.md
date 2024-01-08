@@ -14,16 +14,24 @@
 <em>**Note:**</em> characters /,\\,' and space are automatically replaced in the mod/repository name with a _. However, the title remain
 3. Fill the description
 4. Fill the name of the branch to add (Optional)
-5. Validate  
-ℹ️ This will create a repository with a brancheMaster. this one shall never be modified directly.
-Other branches can be created, using Developer as basis.
-
-## Publish a new release of a mod ⚠️This part is not ready yet
+5. Validate
+6. In Info.json, update the factorio_version if necessary (Default:1.0)
+___
+ℹ️ This will create a repository with a branche Master. this one shall never be modified directly.
+A RREADME.md file is created, but empty. When publishing, its content is added as detailed description of the mod 
+The info.json file is as well created, but only for development. **Other than <em>factorio_version</em>**,it is useless to fulfill it properly, as it will be overwritten during the publish process
+Other branches can be created, using Master as basis.
+___
+## Publish a new release of a mod
 1. Implement code
-2. update info.json **only with dependancies other than the base**
-3. Push the changes to the corresponding branch
-4. Create a pull request to the master
-5. Add issues with labels (mandatory to fulfill the changelog)
-6. Merge  
-ℹ️ Version is updated based on quantity of issues and version of Factorio. Info.json and changelog.txt are updated automatically.
-Then a release is created, and zip file is sent automatically to Factorio mods
+2. If necessary, update the dependancies in the environment variable **MOD_DEPENDANCIES**, with format list json.
+   ⚠️Don't add the dependancie to the base, this one is handled automatically
+4. Push the changes to the corresponding branch
+5. Create a pull request to the master
+6. Add issues with labels **(mandatory)**  
+<em>**Note:**</em>Issues are used to create changelog. The label of the issue is the type of change, while its title is the description of the change + the url of the issue
+8. Merge
+___
+ℹ️ This will create a new release for the repo, which description is the changelog content. Then, the content as zip is downloaded, changelog and info.json file are automatically generated, included into the zip
+<em>which is then sent to Factorio (⚠️not ready yet)</em>
+___
