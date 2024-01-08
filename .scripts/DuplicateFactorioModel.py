@@ -60,7 +60,6 @@ with open(f"{os.getenv('APPDATA')}\\factorio\\player-data.json") as read_content
   new_repo.create_variable("MOD_AUTHOR",json.load(read_content)["service-username"])
 new_repo.create_variable("MOD_DEPENDANCIES"," ")
 
-
 #Createw info.json
 info_json={
 "name": new_repo.name,
