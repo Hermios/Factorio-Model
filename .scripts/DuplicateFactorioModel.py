@@ -41,7 +41,7 @@ github.get_user()._requester.requestJsonAndCheck(
 new_repo=github.get_user().get_repo(mod_name)
 
 #Delete readme
-new_repo.delete_file("README.md","delete README.md",template_repo.get_readme().sha)
+new_repo.update_file("README.md","empty README.md","",template_repo.get_readme().sha)
 
 #Delete all existing labels
 [label.delete() for label in new_repo.get_labels()] 
@@ -55,10 +55,21 @@ new_repo.create_secret("OAUTH_TOKEN",token)
 
 #Set variables
 new_repo.create_variable("MOD_TITLE",title)
-new_repo.create_variable("MOD_DESCRIPTION",description)
+new_repo.create_variable("MOD_DESCRIPTION",description or " ")
 with open(f"{os.getenv('APPDATA')}\\factorio\\player-data.json") as read_content:
   new_repo.create_variable("MOD_AUTHOR",json.load(read_content)["service-username"])
 new_repo.create_variable("MOD_DEPENDANCIES"," ")
+
+
+#Createw info.json
+info_json={
+"name": new_repo.name,
+  "version": "0.0.1",
+  "title": new_repo.get_variable("MOD_TITLE").value,
+  "author": new_repo.get_variable("MOD_AUTHOR").value
+}
+new_repo.create_file("info.json", "init info.json", json.dumps(info_json,indent=2))
+
 # Clone branch
 if new_branch!="":
   branch = new_repo.get_branch("master")
