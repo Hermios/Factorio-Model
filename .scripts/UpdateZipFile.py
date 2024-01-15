@@ -30,11 +30,28 @@ os.rename(previous_zip_file_name,zip_file_name)
 os.remove(f"./{zip_file_name}/README.md")
 
 ################################# Set info.json ###############################
+factorio_version=os.environ['FACTORIO_RELEASE'][:os.environ['FACTORIO_RELEASE'].rfind('.')]
+mod_dependancies=[f"base>={os.environ['FACTORIO_RELEASE']}"]
 try:
-    mod_dependancies=json.loads(repo.get_variable("MOD_DEPENDANCIES").value)
+    for dependancy in repo.get_variable("MOD_DEPENDANCIES").value.split('\r\n'):
+        if dependancy.startswith("!"):
+            mod_dependancies.append(dependancy)
+        else:    
+            mod=re.search("(\w+)",dependancy).group(1)
+            with requests.get(f"https://mods.factorio.com/api/mods/{mod}") as response:
+                last_version=None
+                for release in response.json()["releases"]:
+                    if release["info_json"]["factorio_version"]==factorio_version:
+                        last_version=release["version"]
+                if not last_version:
+                    if not dependancy.startswith("?"):
+                       print(f"mod unavailable for dependancy: {dependancy}")
+                       exit(1) 
+                else:
+                    mod_dependancies.append(f"{dependancy}>={last_version}")
 except:
-    mod_dependancies=[]
-mod_dependancies.insert(0,f"base>={os.environ['FACTORIO_RELEASE']}")
+    pass
+
 
 info_json={
   "name": repo.name,
@@ -44,7 +61,7 @@ info_json={
   "homepage": repo.url,
   "dependencies": mod_dependancies,
   "description": repo.get_variable("MOD_DESCRIPTION").value,
-  "factorio_version": os.environ['FACTORIO_RELEASE'][:os.environ['FACTORIO_RELEASE'].rfind('.')]
+  "factorio_version": factorio_version
 }
 
 # create info.json file
@@ -99,9 +116,9 @@ if mod_exists and readme is not None:
         exit(1)
     
 #Update url for mod exists or not
-Init_EndPoint=f"https://mods.factorio.com/api/v2/mods/{'releases/init_upload' if mod_exists else 'init_publish'}"
+init_end_point=f"https://mods.factorio.com/api/v2/mods/{'releases/init_upload' if mod_exists else 'init_publish'}"
 
-response = requests.post(Init_EndPoint, data={"mod":repo.name}, headers=request_headers)
+response = requests.post(init_end_point, data={"mod":repo.name}, headers=request_headers)
 
 if not response.ok:
     print(f"{'init_upload' if mod_exists else 'init_publish'} failed: {response.text}")
