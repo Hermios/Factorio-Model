@@ -25,7 +25,11 @@ ___
 ## Publish a new release of a mod
 1. Implement code
 2. If necessary, update the dependancies in the environment variable **MOD_DEPENDANCIES**, with format list json.
-   ⚠️Don't add the dependancie to the base, this one is handled automatically
+___
+ℹ️ To add dependancy, simply add the name of the mod, with signs !,? or ~ if necessary. if sign !, it will simply be added. For other signs, the last release of the mod is automatically added, if compatible with current factorio version. If no mod is available for this version of Factorio, and the mod is mandatory, this generate an error  
+⚠️Don't add dependancy to the base, this one is handled automatically
+___
+   
 4. Push the changes to the corresponding branch
 5. Create a pull request to the master
 6. Add issues with labels **(mandatory)**  
