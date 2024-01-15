@@ -1,4 +1,4 @@
-import os
+import os,re
 import json
 from github import Github
 from glob import glob
@@ -31,26 +31,27 @@ os.remove(f"./{zip_file_name}/README.md")
 
 ################################# Set info.json ###############################
 factorio_version=os.environ['FACTORIO_RELEASE'][:os.environ['FACTORIO_RELEASE'].rfind('.')]
-mod_dependancies=[f"base>={os.environ['FACTORIO_RELEASE']}"]
+mod_dependancies=[f"base>{os.environ['FACTORIO_RELEASE']}"]
 try:
-    for dependancy in repo.get_variable("MOD_DEPENDANCIES").value.split('\r\n'):
-        if dependancy.startswith("!"):
-            mod_dependancies.append(dependancy)
-        else:    
-            mod=re.search("(\w+)",dependancy).group(1)
-            with requests.get(f"https://mods.factorio.com/api/mods/{mod}") as response:
-                last_version=None
-                for release in response.json()["releases"]:
-                    if release["info_json"]["factorio_version"]==factorio_version:
-                        last_version=release["version"]
-                if not last_version:
-                    if not dependancy.startswith("?"):
-                       print(f"mod unavailable for dependancy: {dependancy}")
-                       exit(1) 
-                else:
-                    mod_dependancies.append(f"{dependancy}>={last_version}")
+    list_dependancies=repo.get_variable("MOD_DEPENDANCIES").value
 except:
-    pass
+    list_dependancies=""
+for dependancy in list_dependancies.split('\r\n'):
+    if dependancy.startswith("!"):
+        mod_dependancies.append(dependancy)
+    else:    
+        mod=re.search("(\w+)",dependancy).group(1)
+        with requests.get(f"https://mods.factorio.com/api/mods/{mod}") as response:
+            last_version=None
+            for release in response.json()["releases"]:
+                if release["info_json"]["factorio_version"]==factorio_version:
+                    last_version=release["version"]
+            if not last_version:
+                if not dependancy.startswith("?"):
+                    print(f"mod unavailable for dependancy: {dependancy}")
+                    exit(1) 
+            else:
+                mod_dependancies.append(f"{dependancy}>={last_version}")
 
 info_json={
   "name": repo.name,
