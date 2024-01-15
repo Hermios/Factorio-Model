@@ -36,6 +36,5 @@ ___
 <em>**Note:**</em>Issues are used to create changelog. The label of the issue is the type of change, while its title is the description of the change + the url of the issue
 8. Merge
 ___
-ℹ️ This will create a new release for the repo, which description is the changelog content. Then, the content as zip is downloaded, changelog and info.json file are automatically generated, included into the zip
-<em>which is then sent to Factorio (⚠️not ready yet)</em>
+ℹ️ This will create a new release for the repo, which description is the changelog content. Then, the content as zip is downloaded, changelog and info.json file are automatically generated, included into the zip which is then sent to Factorio
 ___
