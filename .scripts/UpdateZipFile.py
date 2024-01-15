@@ -52,7 +52,6 @@ try:
 except:
     pass
 
-
 info_json={
   "name": repo.name,
   "version": os.environ['RELEASE_VERSION'],
