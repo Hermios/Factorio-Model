@@ -1,1 +1,1 @@
-ModName=""
+modname=""
