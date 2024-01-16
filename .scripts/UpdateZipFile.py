@@ -37,7 +37,10 @@ try:
 except:
     list_dependancies=""
 for dependancy in list_dependancies.split('\r\n'):
-    if dependancy.startswith("!"):
+    dependancy=dependancy.strip()
+    if dependancy=="":
+        continue
+    elif dependancy.startswith("!"):
         mod_dependancies.append(dependancy)
     else:    
         mod=re.search("(\w+)",dependancy).group(1)
