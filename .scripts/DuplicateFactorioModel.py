@@ -45,7 +45,7 @@ new_repo.update_file("README.md","init README.md","# *_Please send any request t
 
 #Update modname
 new_repo.create_file("constants.lua","create constants.lua",
-  f'modname={mod_name}\ntech="tech-"..modname\nrecipe="recipe-"..modname\nsignal="signal-"..modname\nprototype="prototype-"..modname')
+  f'modname="{mod_name}"\ntech="tech-"..modname\nrecipe="recipe-"..modname\nsignal="signal-"..modname\nprototype="prototype-"..modname')
 
 
 #Delete all existing labels
