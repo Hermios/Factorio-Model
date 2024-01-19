@@ -1,10 +1,10 @@
 data:extend(
 {
   {
-    type = "",
-    name = ,
-    icon = "__"..modname.."__/graphics/icons/"....".png",
-    icon_size = ,
+    type = "signal",
+    name = signal,
+    icon = "__"..modname.."__/graphics/icons/signal.png",
+    icon_size = 128,
     subgroup = "",
     order = ""
   }

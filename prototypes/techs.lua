@@ -1,2 +1,27 @@
-local effectsArray=data.raw["technology"][""].effects
-table.insert(effectsArray,{type = "unlock-recipe",recipe = })
+data:extend(
+{
+  {
+    type = "technology",
+    name = tech,
+    icon = "__"..modname.."__/graphics/tech/tech.png",
+	icon_size=128,
+    effects =
+    {
+      {
+        type = "unlock-recipe",
+        recipe = recipe
+      },
+    },
+  prerequisites = {},
+    unit =
+    {
+      count = ,
+      ingredients =
+      {
+        {, },
+      },
+      time = 
+    },
+    order = ,
+  }
+})

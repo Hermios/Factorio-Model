@@ -40,8 +40,13 @@ github.get_user()._requester.requestJsonAndCheck(
 )
 new_repo=github.get_user().get_repo(mod_name)
 
-#Delete readme
+#Update readme
 new_repo.update_file("README.md","init README.md","# *_Please send any request to Github (See Source URL!)_*",template_repo.get_readme().sha)
+
+#Update modname
+new_repo.create_file("constants.lua","create constants.lua",
+  f'modname={mod_name}\ntech="tech-"..modname\nrecipe="recipe-"..modname\nsignal="signal-"..modname\nprototype="prototype-"..modname')
+
 
 #Delete all existing labels
 [label.delete() for label in new_repo.get_labels()] 
