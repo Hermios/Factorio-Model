@@ -45,7 +45,7 @@ new_repo.update_file("README.md","init README.md","# *_Please send any request t
 
 #Update modname
 new_repo.create_file("constants.lua","create constants.lua",
-  f'modname="{mod_name}"\ntech="tech-"..modname\nrecipe="recipe-"..modname\nsignal="signal-"..modname\nprototype="prototype-"..modname')
+  f'modname={mod_name}\ntech="tech-"..modname\nrecipe="recipe-"..modname\nsignal="signal-"..modname\nprototype="prototype-"..modname')
 
 
 #Delete all existing labels
@@ -65,12 +65,19 @@ with open(f"{os.getenv('APPDATA')}\\factorio\\player-data.json") as read_content
   new_repo.create_variable("MOD_AUTHOR",json.load(read_content)["service-username"])
 new_repo.create_variable("MOD_DEPENDANCIES"," ")
 
+req=Request("https://factorio.com/api/latest-releases",headers={'User-Agent' : "Magic Browser"})
+with urlopen(req)  as response:
+  factorio_release_data = json.loads(response.read())["experimental"]["alpha"].split(".")
+
+factorio_version=factorio_release_data[0]+"."+factorio_release_data[1]
+
 #Createw info.json
 info_json={
 "name": new_repo.name,
   "version": "0.0.1",
   "title": new_repo.get_variable("MOD_TITLE").value,
-  "author": new_repo.get_variable("MOD_AUTHOR").value
+  "author": new_repo.get_variable("MOD_AUTHOR").value,
+  "factorio_version": factorio_version
 }
 new_repo.create_file("info.json", "init info.json", json.dumps(info_json,indent=2))
 
