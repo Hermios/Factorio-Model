@@ -61,7 +61,7 @@ info_json={
   "version": os.environ['RELEASE_VERSION'],
   "title": repo.get_variable("MOD_TITLE").value,
   "author": repo.get_variable("MOD_AUTHOR").value,
-  "homepage": repo.url,
+  "homepage": repo.html_url,
   "dependencies": mod_dependancies,
   "description": repo.get_variable("MOD_DESCRIPTION").value,
   "factorio_version": factorio_version
@@ -104,7 +104,7 @@ data={
     "description": readme,
     "category":os.getenv("MOD_CATEGORY"),
     "license":os.getenv("MOD_LICENCE"),
-    "source_url":repo.url
+    "source_url":repo.html_url
 }
 
 #Does mod exits
