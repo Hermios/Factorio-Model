@@ -6,7 +6,7 @@ data:extend({
         ingredients = {
 			{"",}
 		},
-        result = ,
+        result = prototype,
         result_count = 1,
     },
 })
