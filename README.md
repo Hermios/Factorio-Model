@@ -1,3 +1,4 @@
+This repository allows to create new mods for Factorio, based on a standard model
 # How to use the Factorio Model
 ⚠️ This works only for Windows
 ## First time
