@@ -1,10 +1,8 @@
-import re
-import subprocess
-import json
-import os
+import os,subprocess,re,json
 from github import Github
 from dotenv import load_dotenv
 from pathlib import Path
+from urllib.request import urlopen,Request
 
 
 #Get inputs
