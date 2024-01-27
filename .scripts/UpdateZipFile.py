@@ -26,8 +26,9 @@ os.remove('release.zip')
 os.rename(previous_zip_file_name,zip_file_name)
 
 # remove all non factorio directories
-[shutil.rmtree(d) for d in glob(f"./{zip_file_name}/.*")]
 os.remove(f"./{zip_file_name}/README.md")
+os.remove(f"./{zip_file_name}/.gitignore")
+[shutil.rmtree(d) for d in glob(f"./{zip_file_name}/.*")]
 
 ################################# Set info.json ###############################
 factorio_version=os.environ['FACTORIO_RELEASE'][:os.environ['FACTORIO_RELEASE'].rfind('.')]
