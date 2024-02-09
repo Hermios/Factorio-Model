@@ -32,7 +32,7 @@ os.remove(f"./{zip_file_name}/.gitignore")
 
 ################################# Set info.json ###############################
 factorio_version=os.environ['FACTORIO_RELEASE'][:os.environ['FACTORIO_RELEASE'].rfind('.')]
-mod_dependancies=[f"base>{os.environ['FACTORIO_RELEASE']}"]
+mod_dependancies=[f"base>={os.environ['FACTORIO_RELEASE']}"]
 try:
     list_dependancies=repo.get_variable("MOD_DEPENDANCIES").value
 except:
