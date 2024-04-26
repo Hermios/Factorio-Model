@@ -11,7 +11,7 @@ description=input("Description? ")
 new_branch=input("Branch name(if empty, no branch will be created)? ")
 
 mod_name=re.sub(r"([/\ '])","_",title)
-
+mod_name=re.sub("-","",mod_name)
 #Load env file
 load_dotenv(dotenv_path=Path(f"{os.getenv('APPDATA')}/GitHub CLI/.env"))
 
