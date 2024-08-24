@@ -1,4 +1,4 @@
-name: Deploy on aws eb
+name: Create factorio mod
 on:
   workflow_dispatch:
     inputs:
@@ -10,7 +10,7 @@ on:
             required: true
 
 jobs:
-  Update_To_Factorio:
+  Create_Factorio_Mod:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -22,9 +22,9 @@ jobs:
       - run: pip install -r ".scripts/requirements.txt"
       - name: Create new mod
         env:
-          OAUTH_TOKEN: ${{ secrets.OAUTH_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           FACTORIO_MOD_API_KEY: ${{ secrets.FACTORIO_MOD_API_KEY }}
           MOD_AUTHOR: ${{ env.MOD_AUTHOR }}
-          TITLE: ${{github.input.event.title}}
-          DESCRIPTION: ${{github.input.event.description}}
+          TITLE: ${{github.event.inputs.title}}
+          DESCRIPTION: ${{github.event.inputs.description}}
         run: python .scripts/DuplicateFactorioModel.py

@@ -12,11 +12,9 @@ mod_author=os.getenv('MOD_AUTHOR')
 
 mod_name=re.sub(r"([/\ '])","_",os.getenv('TITLE'))
 mod_name=re.sub("-","",mod_name)
-#Load env file
-load_dotenv(dotenv_path=Path(f"{os.getenv('APPDATA')}/GitHub CLI/.env"))
 
 #Get Github token
-token=subprocess.check_output("gh auth token",shell=True).decode('utf-8').replace("\n","")
+token=os.env("GITHUB_TOKEN")
 
 #Authenticate
 github=Github(token)
@@ -43,7 +41,7 @@ new_repo.update_file("README.md","init README.md","# *_Please send any request t
 
 #Update modname
 new_repo.create_file("constants.lua","create constants.lua",
-  f'modname={mod_name}\ntech="tech-"..modname\nrecipe="recipe-"..modname\nsignal="signal-"..modname\nprototype="prototype-"..modname')
+  f'modname="{mod_name}"\ntech="tech-"..modname\nrecipe="recipe-"..modname\nsignal="signal-"..modname\nprototype="prototype-"..modname')
 
 
 #Delete all existing labels
