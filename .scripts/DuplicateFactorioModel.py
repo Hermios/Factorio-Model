@@ -28,13 +28,13 @@ post_parameters = {
     "include_all_branches":True
 }
 
-github.get_user()._requester.requestJsonAndCheck(
+'''github.get_user()._requester.requestJsonAndCheck(
     "POST",
     f"/repos/{template_repo.owner.login}/{template_repo.name}/generate",
     input=post_parameters,
     headers={"Accept": "application/vnd.github.v3+json"},
-)
-new_repo=github.get_user().get_repo(mod_name)
+)'''
+new_repo=github.get_repo(f'{os.getenv("ACTOR")}/{mod_name}')
 
 #Update readme
 new_repo.update_file("README.md","init README.md","# *_Please send any request to Github (See Source URL!)_*",template_repo.get_readme().sha)
