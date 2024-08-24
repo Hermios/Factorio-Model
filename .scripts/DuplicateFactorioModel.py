@@ -1,4 +1,4 @@
-import os,subprocess,re,json
+import os,re,json
 from github import Github
 from dotenv import load_dotenv
 from pathlib import Path
@@ -28,12 +28,12 @@ post_parameters = {
     "include_all_branches":True
 }
 
-'''github.get_user()._requester.requestJsonAndCheck(
+github.get_user()._requester.requestJsonAndCheck(
     "POST",
     f"/repos/{template_repo.owner.login}/{template_repo.name}/generate",
     input=post_parameters,
     headers={"Accept": "application/vnd.github.v3+json"},
-)'''
+)
 new_repo=github.get_repo(f'{os.getenv("ACTOR")}/{mod_name}')
 
 #Update readme

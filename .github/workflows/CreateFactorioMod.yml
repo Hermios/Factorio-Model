@@ -1,4 +1,7 @@
 name: Create factorio mod
+permissions:
+  content: write
+  
 on:
   workflow_dispatch:
     inputs:
