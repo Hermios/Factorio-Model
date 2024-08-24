@@ -22,10 +22,10 @@ jobs:
           cache: 'pip'
       - run: pip install -r ".scripts/requirements.txt"
       - name: Create new mod
-              env:
-                OAUTH_TOKEN: ${{ secrets.OAUTH_TOKEN }}
-                FACTORIO_MOD_API_KEY: ${{ secrets.FACTORIO_MOD_API_KEY }}
-                MOD_AUTHOR: ${{ env.MOD_AUTHOR }}
-                TITLE: ${{github.input.event.title}}
-                DESCRIPTION: ${{github.input.event.description}}
-              run: python .scripts/DuplicateFactorioModel.py
+        env:
+          OAUTH_TOKEN: ${{ secrets.OAUTH_TOKEN }}
+          FACTORIO_MOD_API_KEY: ${{ secrets.FACTORIO_MOD_API_KEY }}
+          MOD_AUTHOR: ${{ env.MOD_AUTHOR }}
+          TITLE: ${{github.input.event.title}}
+          DESCRIPTION: ${{github.input.event.description}}
+        run: python .scripts/DuplicateFactorioModel.py
