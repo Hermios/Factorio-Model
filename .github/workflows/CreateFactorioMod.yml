@@ -27,4 +27,5 @@ jobs:
           MOD_AUTHOR: ${{ env.MOD_AUTHOR }}
           TITLE: ${{github.event.inputs.title}}
           DESCRIPTION: ${{github.event.inputs.description}}
+          ACTOR: ${{ github.actor }}
         run: python .scripts/DuplicateFactorioModel.py

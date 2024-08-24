@@ -23,7 +23,7 @@ github=Github(token)
 template_repo=github.get_repo("Hermios/Factorio-Model")
 post_parameters = {
     "name": mod_name,
-    "owner": github.get_user().login,
+    "owner": os.getenv("ACTOR"),
     "description": description,
     "include_all_branches":True
 }
