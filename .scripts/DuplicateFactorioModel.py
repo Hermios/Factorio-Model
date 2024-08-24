@@ -6,8 +6,9 @@ from urllib.request import urlopen,Request
 
 
 #Get inputs
-title=input("Title of the mod? ")
-description=input("Description? ")
+title=os.getenv('TITLE')
+description=os.getenv('DESCRIPTION')
+mod_author=os.getenv('MOD_AUTHOR')
 
 mod_name=re.sub(r"([/\ '])","_",os.getenv('TITLE'))
 mod_name=re.sub("-","",mod_name)
@@ -25,7 +26,7 @@ template_repo=github.get_repo("Hermios/Factorio-Model")
 post_parameters = {
     "name": mod_name,
     "owner": github.get_user().login,
-    "description": os.getenv("DESCRIPTION"),
+    "description": description,
     "include_all_branches":True
 }
 
@@ -57,9 +58,9 @@ new_repo.create_secret("OAUTH_TOKEN",token)
 
 #Set variables
 new_repo.create_variable("MOD_TITLE",title)
-new_repo.create_variable("MOD_DESCRIPTION",os.getenv("DESCRIPTION") or " ")
+new_repo.create_variable("MOD_DESCRIPTION",description or " ")
 with open(f"{os.getenv('APPDATA')}\\factorio\\player-data.json") as read_content:
-  new_repo.create_variable("MOD_AUTHOR",json.load(read_content)["service-username"])
+  new_repo.create_variable("MOD_AUTHOR",mod_author)
 new_repo.create_variable("MOD_DEPENDANCIES"," ")
 
 req=Request("https://factorio.com/api/latest-releases",headers={'User-Agent' : "Magic Browser"})
@@ -79,5 +80,5 @@ info_json={
 new_repo.create_file("info.json", "init info.json", json.dumps(info_json,indent=2))
 
 # Clone branch
-  branch = new_repo.get_branch("master")
-  new_repo.create_git_ref(ref=f'refs/heads/dev', sha=branch.commit.sha)
+branch = new_repo.get_branch("master")
+new_repo.create_git_ref(ref=f'refs/heads/dev', sha=branch.commit.sha)

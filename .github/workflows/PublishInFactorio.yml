@@ -1,36 +1,13 @@
 name: Auto publish
 
 on:
-  workflow_call:
-    secrets: 
-      OAUTH_TOKEN:
-        required: true
-      FACTORIO_MOD_API_KEY:
-        required: true
+  pull_request:
+    types:
+      - closed
+    branches:
+      - 'master'
 
 jobs:
   Update_To_Factorio:
-    if: github.event.pull_request.merged == true
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: Set up Python 3.11
-        uses: actions/setup-python@v3
-        with:
-          python-version: 3.11
-          cache: 'pip'
-      - run: pip install -r ".scripts/requirements.txt"
-      - uses: nearform-actions/github-action-check-linked-issues@v1
-        id: get-linked-issues
-      - name: Run Create Release
-        env:
-          PULL_REQUEST: ${{ toJson(github.event.pull_request) }}
-          OAUTH_TOKEN: ${{ secrets.OAUTH_TOKEN }}
-          LIST_ISSUES: ${{ steps.get-linked-issues.outputs.issues }}
-        run: python .scripts/CreateRelease.py
-      - name: update zip for Factorio
-        env:
-          PULL_REQUEST: ${{ toJson(github.event.pull_request) }}
-          OAUTH_TOKEN: ${{ secrets.OAUTH_TOKEN }}
-          FACTORIO_MOD_API_KEY: ${{ secrets.FACTORIO_MOD_API_KEY }}
-        run: python .scripts/UpdateZipFile.py
+    uses: Hermios/Factorio-model/.github/workflows/PublishInFactorio.yml@main
+    secrets: inherit

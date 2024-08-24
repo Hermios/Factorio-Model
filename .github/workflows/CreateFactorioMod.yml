@@ -1,12 +1,13 @@
 name: Deploy on aws eb
 on:
   workflow_dispatch:
-    title:
-          description: 'Title of the mod'     
-          required: true
-    description:
-          description: 'Description of the mod'     
-          required: true
+    inputs:
+      title:
+            description: 'Title of the mod'     
+            required: true
+      description:
+            description: 'Description of the mod'     
+            required: true
 
 jobs:
   Update_To_Factorio:
@@ -22,8 +23,9 @@ jobs:
       - run: pip install -r ".scripts/requirements.txt"
       - name: Create new mod
               env:
-                PULL_REQUEST: ${{ toJson(github.event.pull_request) }}
                 OAUTH_TOKEN: ${{ secrets.OAUTH_TOKEN }}
-                LIST_ISSUES: ${{ steps.get-linked-issues.outputs.issues }}
+                FACTORIO_MOD_API_KEY: ${{ secrets.FACTORIO_MOD_API_KEY }}
+                MOD_AUTHOR: ${{ env.MOD_AUTHOR }}
+                TITLE: ${{github.input.event.title}}
+                DESCRIPTION: ${{github.input.event.description}}
               run: python .scripts/DuplicateFactorioModel.py
-      
