@@ -1,11 +1,12 @@
 name: Auto publish
 
 on:
-  pull_request:
-    types:
-      - closed
-    branches:
-      - 'master'
+  workflow_call:
+    secrets: 
+      OAUTH_TOKEN:
+        required: true
+      FACTORIO_MOD_API_KEY:
+        required: true
 
 jobs:
   Update_To_Factorio:

@@ -1,0 +1,29 @@
+name: Deploy on aws eb
+on:
+  workflow_dispatch:
+    title:
+          description: 'Title of the mod'     
+          required: true
+    description:
+          description: 'Description of the mod'     
+          required: true
+
+jobs:
+  Update_To_Factorio:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v3
+        with:
+          python-version: 3.11
+          cache: 'pip'
+      - run: pip install -r ".scripts/requirements.txt"
+      - name: Create new mod
+              env:
+                PULL_REQUEST: ${{ toJson(github.event.pull_request) }}
+                OAUTH_TOKEN: ${{ secrets.OAUTH_TOKEN }}
+                LIST_ISSUES: ${{ steps.get-linked-issues.outputs.issues }}
+              run: python .scripts/DuplicateFactorioModel.py
+      
