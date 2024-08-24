@@ -14,7 +14,7 @@ mod_name=re.sub(r"([/\ '])","_",os.getenv('TITLE'))
 mod_name=re.sub("-","",mod_name)
 
 #Get Github token
-token=os.env("GITHUB_TOKEN")
+token=os.getenv("GITHUB_TOKEN")
 
 #Authenticate
 github=Github(token)
